@@ -1,0 +1,57 @@
+
+slide-toggle {
+  box-sizing: border-box;
+  background: #f0f0f0;
+  border: 0.05em solid #e0e0e0;
+  cursor: pointer;
+  width: 1.75em;
+  height: 1em;
+  position: static;
+  display: inline-block;
+  font-size: 2em;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+}
+
+slide-toggle > .slideToggleButton {
+  background: #f8f8f8;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+  height: 1em;
+  position: relative;
+  left: 0;
+  top: -0.05em;
+  width: 1em;
+  -moz-box-shadow: 1px 0 2px 0 #bbb;
+  -webkit-box-shadow: 1px 0 2px 0 #bbb;
+  box-shadow: 1px 0 2px 0 #bbb;
+  -webkit-transition: 0.1s ease-out;
+  -moz-transition: 0.1s ease-out;
+  -o-transition: 0.1s ease-out;
+  transition: 0.1s ease-out;
+}
+
+slide-toggle.isOn {
+  background-color: #37b737;
+  background: -moz-linear-gradient(bottom, #2c922c 0, #2c922c 20%, #37b737 100%);
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0%, #2c922c), color-stop(20%, #2c922c), color-stop(100%, #37b737));
+  background: -webkit-linear-gradient(bottom, #2c922c 0, #2c922c 20%, #37b737 100%);
+  background: -ms-linear-gradient(bottom, #2c922c 0, #2c922c 20%, #37b737 100%);
+  background: -o-linear-gradient(bottom, #2c922c 0, #2c922c 20%, #37b737 100%);
+  background: linear-gradient(bottom, #2c922c 0, #2c922c 20%, #37b737 100%);
+  border-color: #37b737;
+}
+
+slide-toggle.isOn > .slideToggleButton {
+  transform: translate(0.75em, 0);
+  -webkit-transform: translate(0.75em, 0);
+  -moz-transform: translate(0.75em, 0);
+  -o-transform: translate(0.75em, 0);
+  -moz-box-shadow: -1px 0 2px 0 #3f7952;
+  -webkit-box-shadow: -1px 0 2px 0 #3f7952;
+  box-shadow: -1px 0 2px 0 #3f7952;
+}
