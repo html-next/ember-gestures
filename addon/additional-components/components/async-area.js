@@ -1,10 +1,12 @@
-import ActionArea from "./action-area";
-import Ember from "ember";
+import Ember from 'ember';
+import GestureArea from './gesture-area';
 
 const {
+  Component,
   observer,
   get: get
 } = Ember;
+
 
 /**!
  *
@@ -12,25 +14,21 @@ const {
  * gesture-ful async-button implementation
  *
  */
-export default ActionArea.extend({
+export default GestureArea.extend({
 
   classNameBindings: ['actionState'],
   actionState: 'default',
 
   _getParams: function(actionName) {
+    let actionArguments = this._super(actionName);
 
-    var actionArguments = this._super(actionName);
-    var Component = this;
-
-    function callbackHandler(promise) {
-      Component.set('promise', promise);
-      Component.set('actionState', 'pending');
-    }
+    let callbackHandler = (promise) => {
+      this.set('promise', promise);
+      this.set('actionState', 'pending');
+    };
 
     actionArguments.splice(1, 0, callbackHandler);
-
     return actionArguments;
-
   },
 
   __observePromiseState: observer('promise', function promiseTheComponentState() {

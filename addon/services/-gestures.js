@@ -13,19 +13,6 @@ export default Service.extend({
 
   _registry: null,
 
-  isDispatching: false,
-  activeManager: null,
-  _managers: null,
-  removeManager(manager) {
-
-  },
-  registerManager(manager) {
-
-  },
-  activateManager(manager) {
-
-  },
-
   retreive(names) {
     return names.map(this.lookup);
   },

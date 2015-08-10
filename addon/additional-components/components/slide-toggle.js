@@ -1,10 +1,12 @@
-import Ember from "ember";
+import Ember from 'ember';
 import VelocityMixin from '../mixins/ember-velocity-mixin';
+import RecognizerMixin from '../../mixins/recognizers';
 
 const {
   run,
   copy,
-  computed
+  computed,
+  Component
 } = Ember;
 
 const {
@@ -12,7 +14,7 @@ const {
   debounce
 } = run;
 
-export default Ember.Component.extend(VelocityMixin, {
+export default Component.extend(RecognizerMixin, VelocityMixin, {
 
   tagName: 'slide-toggle',
   classNameBindings: ['_value:isOn:isOff'],
@@ -49,47 +51,21 @@ export default Ember.Component.extend(VelocityMixin, {
 
   'on-toggle': null,
   _defaultAction: 'slideToggleChange',
-  _getParams: function(actionName) {
-    var args = this.getWithDefault('_anonArgs', []);
-    var argTypes = this.getWithDefault('_anonArgTypes', []);
-    var value = this.get('_value');
-    var actionArguments = [actionName, value];
-
-    // Some of the arguments passed in might be bound values (ID type according to
-    // the option types stored in _argTypes). If so, we get the stream and retrieve
-    // the value when the button is clicked. Once the Stream API is public,
-    // the helper will be converted to pass in a concatenated array of streams
-    for (var index = 0, length = args.length; index < length; index++) {
-      value = args[index];
-
-      if (argTypes[index] === 'ID') {
-        value = this._parentView.getStream(value).value();
-      }
-
-      actionArguments.push(value);
-
-    }
-
-    return actionArguments;
-
-  },
 
   _notify: function() {
-    var unidirectional = this.get('unidirectional');
-    var action = this.get('on-toggle');
-    var defaultAction = this.get('_defaultAction');
-    var target = this.get('target');
-    var context;
+    let unidirectional = this.get('unidirectional');
+    let action = this.get('on-toggle');
+    let defaultAction = this.get('_defaultAction');
+    let target = this.get('target');
+    let context = this.get('context');
 
     if (unidirectional || action) {
 
       if (target && target.send) {
-        context = this._getParams(action || defaultAction);
-        target.send.apply(this, context);
+        target.send(action, context);
       } else {
-        action = action ? 'on-toggle' : 'defaultAction';
-        context = this._getParams(action);
-        this.sendAction.apply(this, context);
+        action = action ? 'on-toggle' : defaultAction;
+        this.sendAction(action, context);
       }
 
     }

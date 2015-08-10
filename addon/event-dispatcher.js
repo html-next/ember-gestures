@@ -18,6 +18,7 @@ const {
 
 export default EventDispatcher.extend({
 
+  canDispatchToEventManager: false,
   _gestures: null,
   _initializeGestures() {
     let list = getModuleList();
