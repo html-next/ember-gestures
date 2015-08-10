@@ -1,0 +1,1 @@
+export { default } from 'ember-mobiletouch/services/gestures';
