@@ -76,60 +76,6 @@ Ember.View.extend({
 
 ##Configuration
 
-The following settings can be configured in `config/environment.js`.  They are shown below with their defaults.
-You can read more by reading the documentation comments in [addon/default-config.js](https://github.com/runspired/ember-mobiletouch/blob/master/addon/default-config.js)
-
-The default configuration can be examined here: http://codepen.io/anon/pen/bNLJbN?editors=001
-
-```
-ENV.mobileTouch = {
-
-    //which gesture families to allow, will create a recognizer for each
-    //a minimum of tap must be present, turning off unused gestures can help performance
-    use : ['tap', 'press', 'pan', 'swipe'],
-
-    //whether to alias "press" to tap within Ember's eventing
-    // very useful if you don't need to distinguish and don't want to lose
-    // taps from people who tap longer
-    alwaysTapOnPress : false,
-    
-    //whether links and actions should trigger tap behavior on press as well
-    // if eventName or "on" has not been explicitly defined
-    // currently does not work with actions
-    defaultTapOnPress : true,
-
-    //passed to new Hammer.Manager(element, options)
-    options : {
-       domEvents : true
-    },
-    
-    //passed to the respective recognizer
-    tune : {
-      tap : { time : 250, threshold : 9 }, //Hammer default is 250 / 2
-      press : { time : 251, threshold : 9 }, //Hammer default is 500 / 5
-      swipe : { direction : 6, velocity : 0.3, threshold : 25 },
-      pan : { direction : 6 },
-      pinch : {},
-      rotate : {}
-    },
-    
-    //what default Ember events should be disabled
-    events : [
-      'touchstart',
-      'touchmove',
-      'touchend',
-      'touchcancel',
-      'mousedown',
-      'mouseup',
-      'click', //not removed, re-aliased to internalClick.  Use cautiously.
-      'dblclick',
-      'mousemove',
-      'mouseenter',
-      'mouseleave'
-    ]
-
-};
-```
 
 ##touchZone
 
@@ -140,11 +86,6 @@ https://gist.github.com/runspired/506f39a4abb2be48d63f
 
 
 ## Writing Tests
-
-When using ember-mobiletouch, actions etc. are no longer triggered by clicks, but by taps.
-This can break some of your apps existing tests.
-
-In `test-helper.js` you will need to import the `Ember.EventDispatcher` changes.
 
 In your tests on actions, you will need to use `triggerEvent('#some-selector', 'tap')` instead
 of `click('#some-selector')`
