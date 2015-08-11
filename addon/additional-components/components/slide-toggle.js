@@ -1,6 +1,7 @@
 import Ember from 'ember';
-import VelocityMixin from '../mixins/ember-velocity-mixin';
+import VelocityMixin from '../mixins/velocity-mixin';
 import RecognizerMixin from '../../mixins/recognizers';
+import layout from '../../templates/components/slide-toggle';
 
 const {
   run,
@@ -19,7 +20,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
   tagName: 'slide-toggle',
   classNameBindings: ['_value:isOn:isOff'],
 
-  layoutName: 'slide-toggle',
+  layout: layout,
 
   unidirectional: false,
   value: false,

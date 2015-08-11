@@ -1,2 +1,6 @@
 import EventDispatcher from 'ember-gestures/event-dispatcher';
-export default EventDispatcher;
+import config from './config/environment';
+
+export default EventDispatcher.extend({
+  useCapture: config.useCapture
+});

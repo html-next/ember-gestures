@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../additional-components/templates/gesture-area';
+import layout from '../templates/components/gesture-element';
 import RecognizerMixin from '../mixins/recognizers';
 import toCamel from 'ember-allpurpose/string/dasherized-to-camel';
 
@@ -37,6 +37,7 @@ export default Component.extend(RecognizerMixin, {
 
   layout: layout,
 
+  context: '',
   _getParams: function(actionName) {
     let context = this.get('context');
     return [actionName, context];

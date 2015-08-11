@@ -2,17 +2,16 @@
 import Ember from 'ember';
 
 const {
-  assert,
-  get: get,
   inject,
   Mixin,
   on
   } = Ember;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   '-gestures': inject.service('-gestures'),
 
+  recognizers: null,
   managerOptions: null,
   __instance: null,
   __manager() {
@@ -30,15 +29,17 @@ export default Ember.Mixin.create({
   },
 
   __setupRecognizers: on('didInsertElement', function() {
-    let manager = this.__manager();
     let recognizers = this.get('recognizers');
-    recognizers.forEach((recognizer) => {
-      manager.add(recognizer);
-    });
+    if (recognizers) {
+      let manager = this.__manager();
+      recognizers.forEach((recognizer) => {
+        manager.add(recognizer);
+      });
+    }
   }),
 
   __teardownRecognizers: on('willDestroyElement', function() {
-    let instance = this.__manager();
+    let instance = this.get('__instance');
     if (instance) {
       instance.off();
       instance.destroy();
@@ -52,8 +53,10 @@ export default Ember.Mixin.create({
 
     // setup recognizers
     let recognizers = this.get('recognizers');
-    recognizers = recognizers ? recognizers.split(' ') : [];
-    this.set('recognizers', this.get('-gestures').lookup(recognizers));
+    if (recognizers) {
+      recognizers = recognizers.split(' ');
+      this.set('recognizers', this.get('-gestures').retreive(recognizers));
+    }
   }
 
 });

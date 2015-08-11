@@ -1,25 +1,30 @@
 /*global Hammer*/
 import Ember from 'ember';
-import camelize from '../../../ember-allpurpose/addon/string/dasherized-to-camel';
-import capitalize from '../../../ember-allpurpose/addon/string/capitalize-word';
+import camelize from 'ember-allpurpose/string/dasherized-to-camel';
+import capitalize from 'ember-allpurpose/string/capitalize-word';
 
 const {
-  get: get,
   Service,
-  set: set
+  set: set,
+  RSVP
   } = Ember;
+
+const {
+  Promise
+  } = RSVP;
 
 export default Service.extend({
 
   _registry: null,
 
   retreive(names) {
+    Ember.Logger.debug('retreiving', names);
     return names.map(this.lookup);
   },
 
   makeRecognizer(name, details) {
 
-    let eventName = name.toLowerCase();
+    let eventName = camelize(name).toLowerCase();
     let gesture = capitalize(details.recognizer);
 
     let options = details.options || {};
@@ -54,16 +59,16 @@ export default Service.extend({
   },
 
   lookup(name) {
-    return Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let recognizer = this.get(`_registry.${name}`);
       if (recognizer) {
         resolve(recognizer);
         return;
       }
 
-      let details = this.container.lookupFactory(`recognizer:${name}`);
+      let details = this.container.lookupFactory(`ember-gesture:recognizers/:${name}`);
       if (details) {
-        resolve(makeRecognizer(name, details));
+        resolve(this.makeRecognizer(name, details));
       }
 
       reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);

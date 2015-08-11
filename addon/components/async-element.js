@@ -2,6 +2,7 @@ import Ember from 'ember';
 import GestureArea from './gesture-element';
 
 const {
+  computed,
   observer,
   get: get
 } = Ember;
@@ -17,6 +18,10 @@ export default GestureArea.extend({
 
   classNameBindings: ['actionState'],
   actionState: 'default',
+
+  isPending: computed('actionState', function() {
+    return this.get('actionState') === 'pending';
+  }),
 
   _getParams: function(actionName) {
     let actionArguments = this._super(actionName);

@@ -1,6 +1,6 @@
 module.exports = {
 
-  name: 'ember-mobiletouch',
+  name: 'ember-gestures',
 
   normalizeEntityName: function() {},
 

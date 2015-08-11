@@ -1,1 +1,1 @@
-export { default } from 'ember-mobiletouch/services/gestures';
+export { default } from 'ember-gestures/services/-gestures';

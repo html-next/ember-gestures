@@ -1,3 +1,2 @@
-import Component from "ember-gestures/additional-components/components/action-area";
-
+import Component from 'ember-gestures/components/gesture-element';
 export default Component;
