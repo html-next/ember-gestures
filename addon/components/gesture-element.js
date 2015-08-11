@@ -1,12 +1,10 @@
 import Ember from 'ember';
-import layout from '../templates/gesture-area';
-import RecognizerMixin from '../../mixins/recognizers';
+import layout from '../additional-components/templates/gesture-area';
+import RecognizerMixin from '../mixins/recognizers';
 import toCamel from 'ember-allpurpose/string/dasherized-to-camel';
 
 const {
   Component,
-  observer,
-  get: get
   } = Ember;
 
 

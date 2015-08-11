@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import GestureArea from './gesture-area';
+import GestureArea from './gesture-element';
 
 const {
-  Component,
   observer,
   get: get
 } = Ember;
@@ -32,16 +31,15 @@ export default GestureArea.extend({
   },
 
   __observePromiseState: observer('promise', function promiseTheComponentState() {
-    var Component = this;
-    get(this, 'promise').then(function() {
-      if (!Component.isDestroyed) {
-        Component.set('actionState', 'fulfilled');
-      }
-    }).catch(function() {
-      if (!Component.isDestroyed) {
-        Component.set('actionState', 'rejected');
-      }
-    });
+    get(this, 'promise')
+      .then(() => {
+        if (!this.isDestroyed) {
+          this.set('actionState', 'fulfilled');
+        }})
+      .catch(() => {
+        if (!this.isDestroyed) {
+          this.set('actionState', 'rejected');
+        }});
   })
 
 
