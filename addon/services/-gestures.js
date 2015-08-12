@@ -15,11 +15,11 @@ const {
 
 export default Service.extend({
 
-  _registry: null,
+  _recognizers: null,
 
-  retreive(names) {
-    Ember.Logger.debug('retreiving', names);
-    return names.map(this.lookup);
+  retrieve(names) {
+    let promises = names.map((name) => { return this.lookupRecognizer(name); });
+    return RSVP.all(promises);
   },
 
   makeRecognizer(name, details) {
@@ -34,7 +34,7 @@ export default Service.extend({
 
     if (details.include) {
       let included = details.include.map((name) => {
-        return this.lookup(name);
+        return this.lookupRecognizer(name);
       });
 
       RSVP.all(included).then((recognizers) => {
@@ -45,7 +45,7 @@ export default Service.extend({
 
     if (details.exclude) {
       let excluded = details.exclude.map((name) => {
-        return this.lookup(name);
+        return this.lookupRecognizer(name);
       });
 
       RSVP.all(excluded).then((recognizers) => {
@@ -54,21 +54,24 @@ export default Service.extend({
 
     }
 
-    this.register(name, Recognizer);
+    this.registerRecognizer(name, Recognizer);
+    return Recognizer;
 
   },
 
-  lookup(name) {
+  lookupRecognizer(name) {
     return new Promise((resolve, reject) => {
-      let recognizer = this.get(`_registry.${name}`);
+      let recognizer = this.get(`_recognizers.${name}`);
       if (recognizer) {
         resolve(recognizer);
         return;
       }
 
-      let details = this.container.lookupFactory(`ember-gesture:recognizers/:${name}`);
+      let path = `ember-gesture:recognizers/${name}`;
+      let details = this.container.lookupFactory(path);
       if (details) {
         resolve(this.makeRecognizer(name, details));
+        return;
       }
 
       reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);
@@ -76,14 +79,14 @@ export default Service.extend({
     });
   },
 
-  register(name, Recognizer) {
-    let registry = this.get('_registry');
+  registerRecognizer(name, Recognizer) {
+    let registry = this.get('_recognizers');
     set(registry, name, Recognizer);
   },
 
   init() {
     this._super();
-    this.set('_registry', {});
+    this.set('_recognizers', {});
   }
 
 });

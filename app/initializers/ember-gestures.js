@@ -5,6 +5,8 @@ export default {
 
   name: 'ember-gestures',
 
-  initialize: function() {}
+  initialize: function() {
+
+  }
 
 }

@@ -53,26 +53,14 @@ In addition to the basic hammer functionality present in the box, ember-gestures
 
 ### Additional Recognizers.
 
-### Global Installation.
+### Using Hammer Globally
+
+### Event Delegation
 
 ### Components to help you get started.
 
 
 ##Usage
-
-```
-Ember.View.extend({
-  
-  gestureAllow : [],
-  
-  gestureExclude : [],
-  
-  tap : function (e) {
-    ;//do something!
-  }
-
-})
-```
 
 ##Configuration
 
@@ -84,11 +72,13 @@ You can increase the area that recognizes touch events for a specific button
 https://gist.github.com/runspired/506f39a4abb2be48d63f
 
 
-
 ## Writing Tests
 
-In your tests on actions, you will need to use `triggerEvent('#some-selector', 'tap')` instead
-of `click('#some-selector')`
+### Ensuring a manager is configured correctly.
+
+### Using the triggerGesture helper.
+
+### Using the trigger helper.
 
 **Important** The jQuery events you need to trigger are the Hammer variant, meaning it is entirely lowercase `swiperight`, `panup`.
 

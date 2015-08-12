@@ -22,6 +22,8 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
 
   layout: layout,
 
+  recognizers: 'pan tap press',
+
   unidirectional: false,
   value: false,
   _value: false,
@@ -85,9 +87,8 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
   },
 
   pan: function (e) {
-
     var allowPanRight = !this.get('_value');
-    var dX = e.originalEvent.gesture.deltaX;
+    var dX = e.gesture.deltaX;
 
     if (allowPanRight) {
       if (dX < 0) { dX = 0; }

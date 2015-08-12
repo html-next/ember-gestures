@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from 'ember-allpurpose/string/dasherized-to-camel';
-import $eventer from './jquery-mock-object';
+import $eventer from './eventer';
+import RegistryWalker from './registry-walker';
 
 const eventEndings = {
   pan: ['Start','Move', 'End', 'Cancel', 'Left', 'Right', 'Up', 'Down'],
@@ -14,8 +15,13 @@ const eventEndings = {
 
 const {
   EventDispatcher,
-  merge
+  merge,
+  isNone,
+  set: set,
+  get: get
   } = Ember;
+
+const fmt = Ember.String.fmt;
 
 export default EventDispatcher.extend({
 
@@ -28,8 +34,10 @@ export default EventDispatcher.extend({
     // coalesce all the events
     let events = merge({}, defaultHammerEvents);
     list.forEach((name) => {
-      let recognizer = this.container.lookup('ember-gestures:recognizer/' + name);
-      addEvent(events, recognizer.recognizer, name);
+      let recognizer = this.container.lookupFactory('ember-gesture:recognizers/' + name);
+      if (recognizer && !recognizer.ignoreEvents) {
+        addEvent(events, recognizer.recognizer, name);
+      }
     });
 
     // add them to the event dispatcher
@@ -40,12 +48,44 @@ export default EventDispatcher.extend({
   setup: function (addedEvents, rootElement) {
 
     this._initializeGestures();
-
-    //remove undesirable events from Ember's Eventing
     let events = this.get('events');
+    let _events = merge({}, events);
+    let viewRegistry = this.container.lookup('-view-registry:main') || Ember.View.views;
     let event;
+
+    // remove undesirable events from Ember's Eventing
+    if (this.get('removeTracking')) {
+      _events.touchstart = null;
+      _events.touchmove = null;
+      _events.touchcancel = null;
+      _events.touchend = null;
+
+      _events.mousedown = null;
+      _events.mouseenter = null;
+      _events.mousemove = null;
+      _events.mouseleave=null;
+      _events.mouseup = null;
+
+      _events.dblclick = null;
+    }
+
+    // merge custom events into Ember's Eventing
+    merge(_events, addedEvents || {});
+
+    // delete unwanted events
+    for (event in _events) {
+      if (_events.hasOwnProperty(event)) {
+        if (!_events[event]) {
+          delete events[event];
+        } else {
+          events[event] = _events[event];
+        }
+      }
+    }
+
+    // merge our events into Ember's Eventing
     merge(events, this.get('_gestures'));
-    merge(events, addedEvents || {});
+
 
     if (!isNone(rootElement)) {
       set(this, 'rootElement', rootElement);
@@ -62,7 +102,8 @@ export default EventDispatcher.extend({
     Ember.assert('Unable to add "ember-application" class to rootElement. Make sure you set rootElement to the body or an element in the body.', rootElement.is('.ember-application'));
 
     if (this.get('useCapture')) {
-      rootElement = $eventer(rootElement);
+      let walker = new RegistryWalker(viewRegistry);
+      rootElement = $eventer(rootElement, walker);
     }
     for (event in events) {
       if (events.hasOwnProperty(event)) {
@@ -98,7 +139,7 @@ function getModuleList() {
   for(var moduleName in requirejs.entries) {
     if (requirejs.entries.hasOwnProperty(moduleName)) {
       let parts = moduleName.match(/ember-gestures\/recognizers\/(.*)/);
-      if (parts) {
+      if (parts && parts[1].indexOf('jshint') === -1) {
         list.push(parts[1]);
       }
     }

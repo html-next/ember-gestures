@@ -21,7 +21,7 @@ export default Mixin.create({
       return instance;
     }
 
-    let opts = this.getWithDefault('managerOptions', {});
+    let opts = this.get('managerOptions') || { domEvents: true };
     instance = new Hammer.Manager(this.element, opts);
     this.set('__instance', instance);
 
@@ -29,11 +29,14 @@ export default Mixin.create({
   },
 
   __setupRecognizers: on('didInsertElement', function() {
-    let recognizers = this.get('recognizers');
-    if (recognizers) {
+
+    let promise = this.get('recognizers');
+    if (promise) {
       let manager = this.__manager();
-      recognizers.forEach((recognizer) => {
-        manager.add(recognizer);
+      promise.then((recognizers) => {
+        recognizers.forEach((recognizer) => {
+          manager.add(recognizer);
+        });
       });
     }
   }),
@@ -41,7 +44,7 @@ export default Mixin.create({
   __teardownRecognizers: on('willDestroyElement', function() {
     let instance = this.get('__instance');
     if (instance) {
-      instance.off();
+      //instance.off();
       instance.destroy();
       this.set('__instance', null);
     }
@@ -54,8 +57,7 @@ export default Mixin.create({
     // setup recognizers
     let recognizers = this.get('recognizers');
     if (recognizers) {
-      recognizers = recognizers.split(' ');
-      this.set('recognizers', this.get('-gestures').retreive(recognizers));
+      this.set('recognizers', this.get('-gestures').retrieve(recognizers.split(' ')));
     }
   }
 
