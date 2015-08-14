@@ -12,6 +12,16 @@ module.exports = {
 
   isDevelopingAddon: function() {
     return true;
+  },
+
+  setupPreprocessorRegistry: function(type, registry) {
+    var TouchAction = require('./htmlbars-plugins/touch-action');
+
+    registry.add('htmlbars-ast-plugin', {
+      name: "touch-action",
+      plugin: TouchAction
+    });
+
   }
 
 };
