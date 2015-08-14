@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   tagName: 'button',
   attributeBindings: ['style', 'type'],
-  style: new SafeString('touch-action: none;'),
+  style: new SafeString('touch-action: manipulation; -ms-touch-action: manipulation;'),
   type: 'button',
   text: '',
   action: '',
