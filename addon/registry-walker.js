@@ -1,9 +1,5 @@
 import Ember from 'ember';
 
-const {
-  run
-  } = Ember;
-
 export default function ViewWalker(registry) {
 
   function inRegistry(id) {

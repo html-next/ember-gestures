@@ -1,6 +1,5 @@
 import jQuery from 'jquery';
 
-/* global document*/
 function getEventName(event) {
   return event.indexOf('.') !== -1 ? event.substr(0, event.indexOf('.')) : event;
 }
@@ -67,4 +66,4 @@ function Eventer($element, walker) {
 
 export default function($element, walker) {
   return new Eventer($element, walker);
-};
+}

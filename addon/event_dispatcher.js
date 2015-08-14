@@ -3,6 +3,7 @@ import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from 'ember-allpurpose/string/dasherized-to-camel';
 import $eventer from './eventer';
 import RegistryWalker from './registry-walker';
+import jQuery from 'jquery';
 
 const eventEndings = {
   pan: ['Start','Move', 'End', 'Cancel', 'Left', 'Right', 'Up', 'Down'],
