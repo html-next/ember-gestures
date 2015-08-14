@@ -1,6 +1,6 @@
 {
   "name": "ember-gestures",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Gesture and Mobile support for Ambitious Ember Applications",
   "directories": {
     "doc": "doc",
