@@ -11,7 +11,7 @@
  <HTMLElement {{action "foo"}} style="touch-action: none;">
  ```
  */
-var TOUCH_ACTION = 'touch-action: none;';
+var TOUCH_ACTION = 'touch-action: manipulation; -ms-touch-action: manipulation';
 
 function TouchActionSupport() {
   this.syntax = null;
@@ -45,12 +45,24 @@ TouchActionSupport.prototype.transform = function TouchActionSupport_transform(a
 TouchActionSupport.prototype.validate = function TouchActionSupport_validate(node) {
   var modifier;
   var onValue;
+  var hasAction;
+  var isFocusable;
 
   if (node.type === 'ElementNode') {
     modifier = elementModifierForPath(node, 'action');
     onValue = modifier ? hashPairForKey(modifier.hash, 'on') : false;
 
-    return modifier && (!onValue || onValue === 'click');
+    hasAction = modifier && (!onValue || onValue === 'click');
+    isFocusable = ['select', 'button', 'input', 'a', 'textarea'].indexOf(node.tag) !== -1;
+
+    if (isFocusable) {
+      if (node.tag === 'input') {
+        var type = elementAttribute(node, 'type');
+        isFocusable = ['button', 'submit', 'text', 'file'].indexOf(type) !== -1;
+      }
+    }
+
+    return hasAction || isFocusable;
   }
 
   return false;
