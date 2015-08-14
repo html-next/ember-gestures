@@ -1,1 +1,1 @@
-import { default } from 'ember-gestures/recognizers/vertical-pan';
+export { default } from 'ember-gestures/recognizers/vertical-pan';

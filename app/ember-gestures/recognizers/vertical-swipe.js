@@ -1,1 +1,1 @@
-import { default } from 'ember-gestures/recognizers/vertical-swipe';
+export { default } from 'ember-gestures/recognizers/vertical-swipe';
