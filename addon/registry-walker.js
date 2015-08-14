@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 export default function ViewWalker(registry) {
 
   function inRegistry(id) {
