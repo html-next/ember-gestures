@@ -24,7 +24,7 @@ export default Service.extend({
 
   makeRecognizer(name, details) {
 
-    let eventName = camelize(name).toLowerCase();
+    let eventName = details.includeEvents ? camelize(name).toLowerCase() : details.recognizer;
     let gesture = capitalize(details.recognizer);
 
     let options = details.options || {};
