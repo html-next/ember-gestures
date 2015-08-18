@@ -44,8 +44,6 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
         value = maxMovement + value;
       }
 
-      Ember.Logger.debug('updating css', value);
-
       // TODO can this happen via this.css ?
       this.animate(element, {translateX: value + 'px'}, {duration: 1});
     }
@@ -88,7 +86,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
 
   pan: function (e) {
     var allowPanRight = !this.get('_value');
-    var dX = e.gesture.deltaX;
+    var dX = e.originalEvent.gesture.deltaX;
 
     if (allowPanRight) {
       if (dX < 0) { dX = 0; }
