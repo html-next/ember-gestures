@@ -11,8 +11,8 @@ module.exports = function(defaults) {
     snippetSearchPaths: ['app', 'tests/dummy/app', 'addon']
   });
 
-  app.import('vendor/ember-gestures/structure.css');
-  app.import('vendor/ember-gestures/theme.css');
+  // app.import('vendor/ember-gestures/structure.css');
+  // app.import('vendor/ember-gestures/theme.css');
 
   /*
     This build file specifes the options for the dummy test app of this
