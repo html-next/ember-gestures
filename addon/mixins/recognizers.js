@@ -22,6 +22,7 @@ export default Mixin.create({
     }
 
     let opts = this.get('managerOptions') || { domEvents: true };
+    opts.useCapture = this.get('-gestures.useCapture');
     instance = new Hammer.Manager(this.element, opts);
     this.set('__instance', instance);
 

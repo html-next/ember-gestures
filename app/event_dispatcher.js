@@ -5,11 +5,12 @@ import config from './config/environment';
 let gestures = Ember.merge({}, {
     emberUseCapture: false,
     removeTracking: true,
-    useCapture: false
+    useFastPaths: false
   });
 gestures = Ember.merge(gestures, config.gestures);
 
 export default EventDispatcher.extend({
   useCapture: gestures.emberUseCapture,
-  removeTracking: gestures.removeTracking
+  removeTracking: gestures.removeTracking,
+  useFastPaths: gestures.useFastPaths
 });

@@ -27,8 +27,18 @@ const fmt = Ember.String.fmt;
 
 export default EventDispatcher.extend({
 
-  canDispatchToEventManager: false,
+  /**
+   Whether or not to cache handler paths on the element
+   when `useCapture` is also true.
+   This needs to be replaced by a feature flag.
+   @private
+   @type {boolean}
+   */
+  useFastPaths: false,
   useCapture: false,
+
+  canDispatchToEventManager: false,
+
   _gestures: null,
   _initializeGestures() {
     let list = getModuleList();
@@ -145,7 +155,7 @@ export default EventDispatcher.extend({
 
     if (this.get('useCapture')) {
       let walker = new RegistryWalker(viewRegistry);
-      rootElement = $eventer(rootElement, walker);
+      rootElement = $eventer(rootElement, walker, this.get('useFastPaths'));
     }
     for (event in events) {
       if (events.hasOwnProperty(event)) {
