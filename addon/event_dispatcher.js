@@ -4,6 +4,7 @@ import dasherizedToCamel from 'ember-allpurpose/string/dasherized-to-camel';
 import $eventer from './eventer';
 import RegistryWalker from './registry-walker';
 import jQuery from 'jquery';
+import mobileDetection from './utils/is-mobile';
 
 const eventEndings = {
   pan: ['Start','Move', 'End', 'Cancel', 'Left', 'Right', 'Up', 'Down'],
@@ -46,9 +47,49 @@ export default EventDispatcher.extend({
 
   },
 
+  _fastFocus() {
+
+    let $root = jQuery(this.get('rootElement'));
+    $root.on('click.ember-gestures, touchend.ember-gestures', function (e) {
+
+      /*
+       Implements fastfocus mechanisms on mobile web/Cordova
+       */
+      if (mobileDetection.is()) {
+        var $element = jQuery(e.currentTarget);
+        var $target = jQuery(e.target);
+
+        /*
+         If the click was on an input element that needs to be able to focus, recast
+         the click as a "focus" event.
+         This fixes tap events on mobile where keyboardShrinksView or similar is true.
+         Such devices depend on the ghost click to trigger focus, but the ghost click
+         will never reach the element.
+         */
+        var notFocusableTypes = ['submit', 'file', 'button', 'hidden', 'reset', 'range', 'radio', 'image', 'checkbox'];
+
+        //fastfocus
+        if ($element.is('textarea') || ($element.is('input') && notFocusableTypes.indexOf($element.attr('type')) === -1)) {
+          $element.focus();
+
+        } else if ($target.is('textarea') || ($target.is('input') && notFocusableTypes.indexOf($target.attr('type')) === -1)) {
+          $target.focus();
+        }
+      }
+
+    });
+
+  },
+
+  willDestroy() {
+    this._super();
+    jQuery(this.get('rootElement')).off('.ember-gestures');
+  },
+
   setup: function (addedEvents, rootElement) {
 
     this._initializeGestures();
+    this._fastFocus();
     let events = this.get('events');
     let _events = merge({}, events);
     let viewRegistry = this.container.lookup('-view-registry:main') || Ember.View.views;
