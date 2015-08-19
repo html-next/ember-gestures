@@ -23,7 +23,7 @@ const {
   get: get
   } = Ember;
 
-const fmt = Ember.String.fmt;
+const { fmt } = Ember.String;
 
 export default EventDispatcher.extend({
 
