@@ -6,7 +6,7 @@ let LinkComponent = Ember.LinkComponent || Ember.LinkView;
 
 export default LinkComponent.reopen({
 
-  attributeBindings: ['style', 'href', 'title'],
+  attributeBindings: ['style'],
   style: new SafeString('touch-action: manipulation; -ms-touch-action: manipulation;')
 
 });
