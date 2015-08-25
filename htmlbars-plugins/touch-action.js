@@ -8,7 +8,7 @@
  include
 
  ```handlebars
- <HTMLElement {{action "foo"}} style="touch-action: none;">
+ <HTMLElement {{action "foo"}} style="touch-action: manipulation; -ms-touch-action: manipulation;">
  ```
  */
 var TOUCH_ACTION = 'touch-action: manipulation; -ms-touch-action: manipulation';

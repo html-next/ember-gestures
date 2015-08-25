@@ -20,12 +20,37 @@ Gesture and Mobile support for Ambitious Ember Applications.
 `ember install ember-gestures`
 
 
-## Out of the Box
+# Features
 
-When you run the default blueprint (runs by default when you do `ember install` or by `ember g ember-gestures`), this addon will install [HammerJS 2.0.5](https://github.com/hammerjs/hammer.js).
+## Fastclick via touch-action CSS and the Hammer-time Polyfill
 
-The addon wires HammerJS into your app as a global (Hammer), and provides various means by which to use HammerJS in your app.  All manager instances created by this addon will emit domEvents, which Ember has been configured to utilize.  This means
-that using Hammer with Ember is just like using any other event with ember, you add event handlers to your views or components.
+### Touch-action
+
+All components available via `ember-gestures` have a `style` attribute set to `touch-action: manipulation; -ms-touch-action: manipulation`.
+All `link-components` and elements with actions on them are modified to also have this style attribute.
+
+### Components
+
+Components available by default include `context-element`, `fast-action`, and `fast-async`.
+
+### Polyfill
+
+`ember-gestures` uses [hammer-time](https://github.com/hammerjs/hammer-time) as a polyfill for `touch-action` CSS
+to enable cross-platform `fastclick`.  This polyfill works based on the presence of `style="touch-action: <foo>;"`
+being present on an element.
+
+
+
+## Gestures via HammerJS
+
+
+When you run the default blueprint (runs by default when you do `ember install` or by `ember g ember-gestures`),
+this addon will install [HammerJS 2.1.x](https://github.com/hammerjs/hammer.js).
+
+The addon wires HammerJS into your app as a global (Hammer), and provides various means by which to use HammerJS
+in your app.  All manager instances created by this addon will emit domEvents, which Ember has been configured to
+utilize.  This means that using Hammer with Ember is just like using any other event with ember, you add event
+handlers to your components.
 
 For example
 ```
@@ -42,7 +67,10 @@ export default Component.extend({
 });
 ```
 
-But before you can do the above, you'll have to ensure your app knows what gestures to recognize. Don't fret, in even advanced cases, getting gestures available throughout your app will take only a few minutes of configuration, not a day of figuring things out.  See [Usage](#usage) for more details and examples of how to setup recognizers in your app.
+#### CAVEAT
+Hammer 2.1.x doesn't exist yet ;)  This repo is using a branch that will become Hammer 2.1.x in order to take
+advantage of several bugfixes that will be in the upcoming 2.0.5 release and a new eventing option available in
+the 2.1.0 release.
 
 
 ## In the Box
