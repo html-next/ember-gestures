@@ -11,7 +11,7 @@ module.exports = {
   },
 
   isDevelopingAddon: function() {
-    return true;
+    return false;
   },
 
   setupPreprocessorRegistry: function(type, registry) {
