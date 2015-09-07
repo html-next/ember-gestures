@@ -6,8 +6,8 @@ module.exports = {
 
   afterInstall: function() {
     var bowerPackages = [
-      { name: 'runspired/hammer.js', target: 'develop' },
-      { name: 'hammer-time', target: '0.2.2'}
+      { name: 'hammer.js', source: 'git@github.com:runspired/hammer.js.git', target: 'develop' },
+      { name: 'hammer-time', source: 'git@github.com:hammerjs/hammer-time.git', target: 'master' }
     ];
     return this.addBowerPackagesToProject(bowerPackages);
   }
