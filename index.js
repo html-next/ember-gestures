@@ -5,9 +5,11 @@ module.exports = {
 
   name: 'ember-gestures',
 
-  included : function (app) {
+  included: function (app) {
+    app.import('vendor/ember-gestures/dom-guard-begin.js');
     app.import(app.bowerDirectory + '/hammerjs/hammer.min.js');
     app.import(app.bowerDirectory + '/hammer-time/hammer-time.js');
+    app.import('vendor/ember-gestures/dom-guard-end.js');
   },
 
   isDevelopingAddon: function() {
