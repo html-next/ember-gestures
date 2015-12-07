@@ -3,6 +3,8 @@ import Ember from 'ember';
 import camelize from 'ember-allpurpose/string/dasherized-to-camel';
 import capitalize from 'ember-allpurpose/string/capitalize-word';
 
+const { getOwner } = Ember;
+
 const {
   Service,
   set: set,
@@ -68,7 +70,7 @@ export default Service.extend({
       }
 
       let path = `ember-gesture:recognizers/${name}`;
-      let details = this.container.lookupFactory(path);
+      let details = getOwner(this)._lookupFactory(path);
       if (details) {
         resolve(this.makeRecognizer(name, details));
         return;
