@@ -24,6 +24,7 @@ const {
   } = Ember;
 
 const { fmt } = Ember.String;
+const { getOwner } = Ember;
 
 export default EventDispatcher.extend({
 
@@ -46,7 +47,7 @@ export default EventDispatcher.extend({
     // coalesce all the events
     let events = merge({}, defaultHammerEvents);
     list.forEach((name) => {
-      let recognizer = this.container.lookupFactory('ember-gesture:recognizers/' + name);
+      let recognizer = getOwner(this)._lookupFactory('ember-gesture:recognizers/' + name);
       if (recognizer && !recognizer.ignoreEvents) {
         addEvent(events, recognizer.recognizer, name);
       }
@@ -102,7 +103,7 @@ export default EventDispatcher.extend({
     this._fastFocus();
     let events = this.get('events');
     let _events = merge({}, events);
-    let viewRegistry = this.container.lookup('-view-registry:main') || Ember.View.views;
+    let viewRegistry = getOwner(this).lookup('-view-registry:main') || Ember.View.views;
     let event;
 
     // remove undesirable events from Ember's Eventing
