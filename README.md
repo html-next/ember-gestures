@@ -123,3 +123,29 @@ https://gist.github.com/runspired/506f39a4abb2be48d63f
 ## Tips and Tricks
 
 Don't bind within `{{#each}}`, use a base recognizer instead.
+
+## Contributing
+
+Contributions are very welcome.
+
+When making a PR try to use the following conventions:
+
+**Commit Messages:**
+
+`type(shortname): action based description`
+
+Examples:
+
+- chore(deps): bump deps in package.json and bower.json
+- docs(component): document the `fast-action` component
+
+**Branch Naming:**
+
+`type/short-description`
+
+Examples:
+
+- chore/bump-deps
+- docs/fast-action-component
+
+
