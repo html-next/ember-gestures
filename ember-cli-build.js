@@ -1,8 +1,9 @@
+/*jshint node:true*/
 /* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-addon');
+var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
+  var app = new EmberAddon(defaults, {
     velocityOptions : {
       enabled: true,
       ui: false
@@ -10,9 +11,6 @@ module.exports = function(defaults) {
     snippetPaths: ['tests/dummy/snippets'],
     snippetSearchPaths: ['app', 'tests/dummy/app', 'addon']
   });
-
-  // app.import('vendor/ember-gestures/structure.css');
-  // app.import('vendor/ember-gestures/theme.css');
 
   /*
     This build file specifes the options for the dummy test app of this
