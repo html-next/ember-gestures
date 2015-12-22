@@ -47,15 +47,6 @@ being present on an element.
 When you run the default blueprint (runs by default when you do `ember install` or by `ember g ember-gestures`),
 this addon will install [HammerJS 2.1.x](https://github.com/hammerjs/hammer.js).
 
-# WARNING
-HammerJS 2.0.5 and 2.1.x have not been released yet but contain bug fixes essential for this to work,
-specifically fixes for configs leaking between manager instances. To install hammer, bower install this branch
-while this warning persists:
-
-```
-bower install --save runspired/hammer.js#develop
-```
-
 The addon wires HammerJS into your app as a global (Hammer), and provides various means by which to use HammerJS
 in your app.  All manager instances created by this addon will emit domEvents, which Ember has been configured to
 utilize.  This means that using Hammer with Ember is just like using any other event with ember, you add event
@@ -75,12 +66,6 @@ export default Component.extend({
     }
 });
 ```
-
-#### CAVEAT
-Hammer 2.1.x doesn't exist yet ;)  This repo is using a branch that will become Hammer 2.1.x in order to take
-advantage of several bugfixes that will be in the upcoming 2.0.5 release and a new eventing option available in
-the 2.1.0 release.
-
 
 ## In the Box
 
