@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "hammer-time": "0.3.0",
-    "hammerjs": "runspired/hammer.js#develop"
+    "hammerjs": "2.0.5"
   },
   "resolutions": {
     "ember": "2.0.0",
