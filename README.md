@@ -89,7 +89,7 @@ Example Dom Tree
 body
 |_ div 1
     |_ component A
-    |_ div 2
+      |_ div 2
        |_ component B (with recognizers)
          |_ div 3
 ```
