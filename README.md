@@ -45,7 +45,7 @@ being present on an element.
 
 
 When you run the default blueprint (runs by default when you do `ember install` or by `ember g ember-gestures`),
-this addon will install [HammerJS 2.1.x](https://github.com/hammerjs/hammer.js).
+this addon will install [HammerJS 2.0.5](https://github.com/hammerjs/hammer.js).
 
 The addon wires HammerJS into your app as a global (Hammer), and provides various means by which to use HammerJS
 in your app.  All manager instances created by this addon will emit domEvents, which Ember has been configured to
