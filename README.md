@@ -73,7 +73,7 @@ const {
 export default Component.extend({
    click() { /.../ },
 
-   attributeBindings: ['style', 'disabled', 'type'],
+   attributeBindings: ['style'],
    style: new SafeString('touch-action: manipulation; -ms-touch-action: manipulation;')
 
 });
