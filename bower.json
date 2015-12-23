@@ -9,11 +9,12 @@
     "ember-qunit-notifications": "~0.1.0",
     "jquery": "^1.11.3",
     "loader.js": "~3.5.0",
-    "qunit": "~1.20.0"
+    "qunit": "~1.20.0",
+    "marked": "~0.3.5"
   },
   "devDependencies": {
     "hammer-time": "0.3.0",
-    "hammerjs": "2.0.6"
+    "hammerjs": "2.0.5"
   },
   "resolutions": {
     "ember": "2.2.0",

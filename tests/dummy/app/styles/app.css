@@ -5,6 +5,7 @@ body {
   font-size: .75em;
   background: #f0f0f0;
   font-family: 'raleway', 'open sans', 'helvetica', 'arial', sans-serif;
+  margin: 0px;
 }
 
 .block-element {
@@ -102,8 +103,7 @@ h2 {
 }
 
 section.container-fluid {
-  margin-top: 25px;
-  margin-bottom: 50px;
+  margin: 5px;
   background: #fff;
   border: 1px solid #e8e8e8;
   border-radius: 2px;
