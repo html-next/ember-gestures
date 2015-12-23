@@ -5,4 +5,4 @@ export default {
     instance.container.lookup('service:-gestures');
   }
 
-}
+};
