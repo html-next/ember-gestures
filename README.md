@@ -56,28 +56,8 @@ a bound `style` attribute set to the above as well.
 
 #### Component.click
 
-If your component implements `click`, to enable cross-platform fastclick behavior you will need to bind the `style`
-attribute on the component like below.
-
-```js
-import Ember from 'ember';
-
-const {
-  Component
-} = Ember;
-
-const {
-  SafeString
-} = Ember.Handlebars;
-
-export default Component.extend({
-   click() { /.../ },
-
-   attributeBindings: ['style'],
-   style: new SafeString('touch-action: manipulation; -ms-touch-action: manipulation;')
-
-});
-```
+If your component implements `click`, it will automatically add the touchAction CSS by applying
+the Mixin available in `ember-gestures/mixins/touch-action`.
 
 #### Recognizers and Managers
 
