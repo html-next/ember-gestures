@@ -54,6 +54,31 @@ The AST Walker automatically adds this style to elements when any of the followi
 All `link-components` (e.g. `{{link-to}}` as well as components made available by `ember-gestures` have
 a bound `style` attribute set to the above as well.
 
+#### Component.click
+
+If your component implements `click`, to enable cross-platform fastclick behavior you will need to bind the `style`
+attribute on the component like below.
+
+```js
+import Ember from 'ember';
+
+const {
+  Component
+} = Ember;
+
+const {
+  SafeString
+} = Ember.Handlebars;
+
+export default Component.extend({
+   click() { /.../ },
+
+   attributeBindings: ['style', 'disabled', 'type'],
+   style: new SafeString('touch-action: manipulation; -ms-touch-action: manipulation;')
+
+});
+```
+
 #### Recognizers and Managers
 
 A `Recognizer` detects a gesture on a target element by listening to received touch, mouse, and pointer events
