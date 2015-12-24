@@ -7,7 +7,7 @@ module.exports = {
   afterInstall: function() {
     var bowerPackages = [
       { name: 'hammer.js', target: '2.0.6' },
-      { name: 'hammer-time', target: '0.3.0'}
+      { name: 'hammer-time', target: '1.0.0'}
     ];
     return this.addBowerPackagesToProject(bowerPackages);
   }
