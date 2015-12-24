@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "hammer-time": "0.3.0",
-    "hammerjs": "2.0.5"
+    "hammerjs": "2.0.6"
   },
   "resolutions": {
     "ember": "2.2.0",
