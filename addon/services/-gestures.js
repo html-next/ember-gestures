@@ -5,13 +5,13 @@ import capitalize from 'ember-allpurpose/string/capitalize-word';
 
 const {
   Service,
-  set: set,
+  set,
   RSVP
-  } = Ember;
+} = Ember;
 
 const {
-  Promise
-  } = RSVP;
+  Promise  // jshint ignore:line
+} = RSVP;
 
 export default Service.extend({
 
@@ -23,14 +23,13 @@ export default Service.extend({
   },
 
   makeRecognizer(name, details) {
+    const eventName = details.eventName || camelize(name).toLowerCase();
+    const gesture = capitalize(details.recognizer);
 
-    let eventName = details.includeEvents ? camelize(name).toLowerCase() : details.recognizer;
-    let gesture = capitalize(details.recognizer);
-
-    let options = details.options || {};
+    const options = details.options || {};
     options.event = eventName;
 
-    let Recognizer = new Hammer[gesture](options);
+    const Recognizer = new Hammer[gesture](options);
     this.registerRecognizer(name, Recognizer);
 
     if (details.include) {
