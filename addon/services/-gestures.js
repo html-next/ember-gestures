@@ -31,6 +31,7 @@ export default Service.extend({
     options.event = eventName;
 
     let Recognizer = new Hammer[gesture](options);
+    this.registerRecognizer(name, Recognizer);
 
     if (details.include) {
       let included = details.include.map((name) => {
@@ -54,7 +55,6 @@ export default Service.extend({
 
     }
 
-    this.registerRecognizer(name, Recognizer);
     return Recognizer;
 
   },
