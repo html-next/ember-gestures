@@ -1,5 +1,3 @@
-import Ember from 'ember';
-
 export default {
   include: ['tap'], //an array of recognizers to recognize with.
   exclude: [], //an array of recognizers that must first fail
