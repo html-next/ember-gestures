@@ -108,3 +108,7 @@ section.container-fluid {
   border: 1px solid #e8e8e8;
   border-radius: 2px;
 }
+
+.application-template {
+  margin: 2px 8px 10px 8px;
+}
