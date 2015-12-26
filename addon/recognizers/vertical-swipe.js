@@ -2,7 +2,7 @@
 export default {
   include: [],
   exclude: [],
-  ignoreEvents: true,
+  eventName: 'swipe',
   options: { threshold: 25, direction: Hammer.DIRECTION_VERTICAL },
   recognizer: 'swipe'
 };

@@ -1,7 +1,7 @@
 export default {
   include: [],
   exclude: [],
-  ignoreEvents: true,
+  eventName: 'pan',
   options: { direction: Hammer.DIRECTION_VERTICAL },
   recognizer: 'pan'
 };
