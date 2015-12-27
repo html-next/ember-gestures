@@ -1,5 +1,5 @@
 module.exports = {
-  description: '',
+  description: 'Install helpful components and the ember-velocity-mixin',
 
   normalizeEntityName: function() {},
 
@@ -10,7 +10,8 @@ module.exports = {
   //   };
   // }
 
-  // afterInstall: function(options) {
-  //   // Perform extra work here.
-  // }
+  afterInstall: function() {
+     this.addAddonToProject('ember-velocity-mixin');
+  }
+
 };

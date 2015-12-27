@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import VelocityMixin from '../mixins/velocity-mixin';
+import VelocityMixin from 'ember-velocity-mixin';
 import RecognizerMixin from '../mixins/recognizers';
 import layout from '../templates/components/slide-toggle';
 
