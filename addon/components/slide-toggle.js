@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import VelocityMixin from '../mixins/velocity-mixin';
-import RecognizerMixin from '../../mixins/recognizers';
-import layout from '../../templates/components/slide-toggle';
+import RecognizerMixin from '../mixins/recognizers';
+import layout from '../templates/components/slide-toggle';
 
 const {
   run,
