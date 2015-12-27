@@ -4,18 +4,21 @@ import RecognizerMixin from 'ember-gestures/mixins/recognizers';
 
 export default Ember.Component.extend(RecognizerMixin, {
   layout: layout,
-  recognizers: 'single-tap double-tap',
+  recognizers: 'tap double-tap',
   sawSingle: false,
   sawDouble: false,
-  singleTap: function() {
+
+  tap() {
     this.reset();
     this.set('sawSingle', true);
   },
-  doubleTap: function() {
+
+  doubleTap() {
     this.reset();
     this.set('sawDouble', true);
   },
-  reset: function() {
+
+  reset() {
     this.set('sawSingle', false);
     this.set('sawDouble', false);
   }
