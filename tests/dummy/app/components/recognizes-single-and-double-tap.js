@@ -19,7 +19,9 @@ export default Ember.Component.extend(RecognizerMixin, {
   },
 
   reset() {
-    this.set('sawSingle', false);
-    this.set('sawDouble', false);
+    if (!this.get('isDestroyed')) {
+      this.set('sawSingle', false);
+      this.set('sawDouble', false);
+    }
   }
 });
