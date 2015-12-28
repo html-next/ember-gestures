@@ -15,12 +15,12 @@ export default Component.extend(RecognizerMixin, {
 
   tap() {
     this.set('sawSingle', true);
-    run.later(this, this.reset, 1000);
+    run.debounce(this, this.reset, 1000);
   },
 
   doubleTap() {
     this.set('sawDouble', true);
-    run.later(this, this.reset, 1000);
+    run.debounce(this, this.reset, 1000);
   },
 
   reset() {

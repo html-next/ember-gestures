@@ -5,7 +5,6 @@ import capitalize from 'ember-allpurpose/string/capitalize-word';
 
 const {
   Service,
-  set,
   RSVP
 } = Ember;
 
@@ -22,70 +21,75 @@ export default Service.extend({
     return RSVP.all(promises);
   },
 
-  makeRecognizer(name, details) {
+  createRecognizer(name, details) {
     const eventName = details.eventName || camelize(name).toLowerCase();
     const gesture = capitalize(details.recognizer);
 
     const options = details.options || {};
     options.event = eventName;
+    options.name = name;
 
     const Recognizer = new Hammer[gesture](options);
-    this.registerRecognizer(name, Recognizer);
 
-    if (details.include) {
-      let included = details.include.map((name) => {
-        return this.lookupRecognizer(name);
-      });
-
-      RSVP.all(included).then((recognizers) => {
-        Recognizer.recognizeWith(recognizers);
-      });
-
-    }
-
-    if (details.exclude) {
-      let excluded = details.exclude.map((name) => {
-        return this.lookupRecognizer(name);
-      });
-
-      RSVP.all(excluded).then((recognizers) => {
-        Recognizer.requireFailure(recognizers);
-      });
-
-    }
-
+    this.set(`_recognizers.${name}`, Recognizer);
     return Recognizer;
+  },
 
+  setupRecognizer(name, details) {
+    return Promise.resolve(this.createRecognizer(name, details))
+
+      // includes
+      .then((Recognizer) => {
+        if (details.include) {
+          const included = details.include.map((name) => {
+            return this.lookupRecognizer(name);
+          });
+          return RSVP.all(included).then((recognizers) => {
+            Recognizer.recognizeWith(recognizers);
+            return Recognizer;
+          });
+        }
+        return Recognizer;
+      })
+
+      // excludes
+      .then((Recognizer) => {
+        if (details.exclude) {
+          const excluded = details.exclude.map((name) => {
+            return this.lookupRecognizer(name);
+          });
+
+          return RSVP.all(excluded).then((recognizers) => {
+            Recognizer.requireFailure(recognizers);
+            Recognizer.exclude = recognizers;
+            return Recognizer;
+          });
+        } else {
+          Recognizer.exclude = [];
+          return Recognizer;
+        }
+      });
   },
 
   lookupRecognizer(name) {
-    return new Promise((resolve, reject) => {
-      let recognizer = this.get(`_recognizers.${name}`);
-      if (recognizer) {
-        resolve(recognizer);
-        return;
-      }
+    let recognizer = this.get(`_recognizers.${name}`);
+    if (recognizer) {
+      return Promise.resolve(recognizer);
+    }
 
-      let path = `ember-gesture:recognizers/${name}`;
-      let details = this.container.lookupFactory(path);
-      if (details) {
-        resolve(this.makeRecognizer(name, details));
-        return;
-      }
+    const path = `ember-gesture:recognizers/${name}`;
+    const details = this.container.lookupFactory(path);
 
-      reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);
+    if (details) {
+      return this.setupRecognizer(name, details);
+    }
 
-    });
-  },
-
-  registerRecognizer(name, Recognizer) {
-    let registry = this.get('_recognizers');
-    set(registry, name, Recognizer);
+    return Promise.reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);
   },
 
   init() {
     this._super();
-    this.set('_recognizers', {});
+    this._recognizers = {};
   }
 
 });

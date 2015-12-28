@@ -15,13 +15,13 @@ export default Mixin.create({
   managerOptions: null,
   __instance: null,
   __manager() {
-
     let instance = this.get('__instance');
     if (instance) {
       return instance;
     }
 
-    let opts = this.get('managerOptions') || { domEvents: true };
+    const opts = this.get('managerOptions') || { domEvents: true };
+
     opts.useCapture = this.get('-gestures.useCapture');
     instance = new Hammer.Manager(this.element, opts);
     this.set('__instance', instance);
@@ -30,14 +30,29 @@ export default Mixin.create({
   },
 
   __setupRecognizers: on('didInsertElement', function() {
-
-    let promise = this.get('recognizers');
+    const promise = this.get('recognizers');
     if (promise) {
-      let manager = this.__manager();
       promise.then((recognizers) => {
-        recognizers.forEach((recognizer) => {
-          manager.add(recognizer);
-        });
+        const manager = this.__manager();
+        // sort the recognizers
+        for (let i = 0; i < recognizers.length; i++) {
+          const r = recognizers[i];
+          let currentIndex = i;
+          if (r.exclude.length) {
+            for (let j = 0; j < r.exclude.length; j++) {
+              const newIndex = recognizers.indexOf(r.exclude[j]);
+              if (currentIndex < newIndex) {
+                recognizers.splice(currentIndex, 1);
+                recognizers.splice(newIndex, 0, r);
+                currentIndex = newIndex;
+              }
+            }
+          }
+        }
+
+        for (let i = 0; i < recognizers.length; i++) {
+          manager.add(recognizers[i]);
+        }
       });
     }
   }),

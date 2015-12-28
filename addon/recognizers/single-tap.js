@@ -2,6 +2,8 @@ export default {
   include: [],
   exclude: ['double-tap'],
   eventName: 'tap',
-  options: {},
+  options: {
+    taps: 1
+  },
   recognizer: 'tap'
 };
