@@ -9,17 +9,19 @@ export default Ember.Component.extend(RecognizerMixin, {
   sawDouble: false,
 
   tap() {
-    this.reset();
     this.set('sawSingle', true);
+    Ember.run.later, this, this.reset, 1000
   },
 
   doubleTap() {
-    this.reset();
     this.set('sawDouble', true);
+    Ember.run.later, this, this.reset, 1000
   },
 
   reset() {
-    this.set('sawSingle', false);
-    this.set('sawDouble', false);
+    if (!this.get('isDestroyed')) {
+      this.set('sawSingle', false);
+      this.set('sawDouble', false);
+    }
   }
 });
