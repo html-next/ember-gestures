@@ -31,12 +31,11 @@ export default Service.extend({
 
     const Recognizer = new Hammer[gesture](options);
 
-    this.set(`_recognizers.${name}`, Recognizer);
     return Recognizer;
   },
 
   setupRecognizer(name, details) {
-    return Promise.resolve(this.createRecognizer(name, details))
+    const promisedRecognizer = Promise.resolve(this.createRecognizer(name, details))
 
       // includes
       .then((Recognizer) => {
@@ -69,12 +68,14 @@ export default Service.extend({
           return Recognizer;
         }
       });
+    this.set(`_recognizers.${name}`, promisedRecognizer);
+    return promisedRecognizer;
   },
 
   lookupRecognizer(name) {
-    let recognizer = this.get(`_recognizers.${name}`);
-    if (recognizer) {
-      return Promise.resolve(recognizer);
+    const promisedRecognizer = this.get(`_recognizers.${name}`);
+    if (promisedRecognizer) {
+      return promisedRecognizer;
     }
 
     const path = `ember-gesture:recognizers/${name}`;
