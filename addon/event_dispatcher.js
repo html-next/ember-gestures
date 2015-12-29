@@ -49,8 +49,8 @@ export default EventDispatcher.extend({
     list.forEach((name) => {
       const recognizer = this.container.lookupFactory('ember-gesture:recognizers/' + name);
 
-      if (recognizer && !recognizer.ignoreEvents) {
-        addEvent(events, recognizer.recognizer, name);
+      if (recognizer) {
+        addEvent(events, recognizer.recognizer, recognizer.eventName || name);
       }
     });
 
