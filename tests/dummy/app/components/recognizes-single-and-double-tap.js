@@ -29,4 +29,5 @@ export default Component.extend(RecognizerMixin, {
       this.set('sawDouble', false);
     }
   }
+
 });
