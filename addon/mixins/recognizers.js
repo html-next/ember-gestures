@@ -38,7 +38,7 @@ export default Mixin.create({
         for (let i = 0; i < recognizers.length; i++) {
           const r = recognizers[i];
           let currentIndex = i;
-          if (r.exclude.length) {
+          if (r.exclude) {
             for (let j = 0; j < r.exclude.length; j++) {
               const newIndex = recognizers.indexOf(r.exclude[j]);
               if (newIndex > 0 && currentIndex < newIndex) {
