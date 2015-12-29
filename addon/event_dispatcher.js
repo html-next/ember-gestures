@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from 'ember-allpurpose/string/dasherized-to-camel';
-import $eventer from './eventer';
-import RegistryWalker from './registry-walker';
 import jQuery from 'jquery';
 import mobileDetection from './utils/is-mobile';
-import getOwner from 'ember-getowner-polyfill';
+
+let ROOT_ELEMENT_CLASS = 'ember-application';
+let ROOT_ELEMENT_SELECTOR = '.' + ROOT_ELEMENT_CLASS;
 
 const eventEndings = {
   pan: ['Start','Move', 'End', 'Cancel', 'Left', 'Right', 'Up', 'Down'],
@@ -19,12 +19,13 @@ const eventEndings = {
 const {
   assert,
   EventDispatcher,
+  merge,
   isNone,
   set,
   get
   } = Ember;
 
-const assign = Ember.assign || Ember.merge;
+const assign = Ember.assign || merge;
 
 export default EventDispatcher.extend({
 
@@ -42,12 +43,11 @@ export default EventDispatcher.extend({
 
   _gestures: null,
   _initializeGestures() {
-    const owner = this.container;
     const list = getModuleList();
     const events = assign({}, defaultHammerEvents);
 
     list.forEach((name) => {
-      const recognizer = owner.lookupFactory('ember-gesture:recognizers/' + name);
+      const recognizer = this.container.lookupFactory('ember-gesture:recognizers/' + name);
 
       if (recognizer && !recognizer.ignoreEvents) {
         addEvent(events, recognizer.recognizer, name);
@@ -93,19 +93,16 @@ export default EventDispatcher.extend({
   },
 
   willDestroy() {
-    this._super();
     jQuery(this.get('rootElement')).off('.ember-gestures');
+    this._super(...arguments);
   },
 
   _finalEvents: null,
 
   setup(addedEvents, rootElement) {
     this._initializeGestures();
-    this._fastFocus();
     const events = this._finalEvents = assign({}, get(this, 'events'));
-    const owner = getOwner(this) || this.container;
 
-    const viewRegistry = owner.lookup('-view-registry:main') || Ember.View.views;
     let event;
 
     // remove undesirable events from Ember's Eventing
@@ -124,7 +121,7 @@ export default EventDispatcher.extend({
       events.dblclick = null;
     }
 
-    // merge custom events into Ember's Eventing
+    // assign custom events into Ember's Eventing
     assign(events, addedEvents || {});
 
     // delete unwanted events
@@ -134,36 +131,33 @@ export default EventDispatcher.extend({
           delete events[event];
         }
       }
-
-      // merge our events into Ember's Eventing
-      assign(events, this.get('_gestures'));
-
-      if (!isNone(rootElement)) {
-        set(this, 'rootElement', rootElement);
-      }
-
-      rootElement = jQuery(get(this, 'rootElement'));
-      const selector = (rootElement.selector || rootElement[0].tagName);
-
-      assert(`You cannot use the same root element (${selector}) multiple times in an Ember.Application`, !rootElement.is('.ember-application'));
-      assert('You cannot make a new Ember.Application using a root element that is a descendent of an existing Ember.Application', !rootElement.closest('.ember-application').length);
-      assert('You cannot make a new Ember.Application using a root element that is an ancestor of an existing Ember.Application', !rootElement.find('.ember-application').length);
-
-      rootElement.addClass('ember-application');
-
-      assert('Unable to add "ember-application" class to rootElement. Make sure you set rootElement to the body or an element in the body.', rootElement.is('.ember-application'));
-
-      if (this.get('useCapture')) {
-        let walker = new RegistryWalker(viewRegistry);
-        rootElement = $eventer(rootElement, walker, this.get('useFastPaths'));
-      }
-      for (event in events) {
-        if (events.hasOwnProperty(event)) {
-          this.setupHandler(rootElement, event, events[event]);
-        }
-      }
-
     }
+
+    // assign our events into Ember's Eventing
+    assign(events, this.get('_gestures'));
+
+    if (!isNone(rootElement)) {
+      set(this, 'rootElement', rootElement);
+    }
+    this._fastFocus();
+
+
+    rootElement = jQuery(get(this, 'rootElement'));
+
+    assert(`You cannot use the same root element (${rootElement.selector || rootElement[0].tagName}) multiple times in an Ember.Application`, !rootElement.is(ROOT_ELEMENT_SELECTOR));
+    assert('You cannot make a new Ember.Application using a root element that is a descendent of an existing Ember.Application', !rootElement.closest(ROOT_ELEMENT_SELECTOR).length);
+    assert('You cannot make a new Ember.Application using a root element that is an ancestor of an existing Ember.Application', !rootElement.find(ROOT_ELEMENT_SELECTOR).length);
+
+    rootElement.addClass(ROOT_ELEMENT_CLASS);
+
+    assert(`Unable to add '${ROOT_ELEMENT_CLASS}' class to rootElement. Make sure you set rootElement to the body or an element in the body.`, rootElement.is(ROOT_ELEMENT_SELECTOR));
+
+    for (event in events) {
+      if (events.hasOwnProperty(event)) {
+        this.setupHandler(rootElement, event, events[event]);
+      }
+    }
+
   }
 
 });

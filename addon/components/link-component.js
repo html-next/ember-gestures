@@ -1,12 +1,6 @@
 import Ember from 'ember';
-
-const { SafeString } = Ember.Handlebars;
+import TouchActionMixin from '../mixins/touch-action';
 
 let LinkComponent = Ember.LinkComponent || Ember.LinkView;
 
-export default LinkComponent.reopen({
-
-  attributeBindings: ['style'],
-  style: new SafeString('touch-action: manipulation; -ms-touch-action: manipulation;')
-
-});
+export default LinkComponent.reopenClass(TouchActionMixin);
