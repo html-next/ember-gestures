@@ -9,7 +9,8 @@ const {
 } = Ember;
 
 const {
-  Promise  // jshint ignore:line
+  Promise,  // jshint ignore:line
+  defer
 } = RSVP;
 
 export default Service.extend({
@@ -30,6 +31,7 @@ export default Service.extend({
     options.name = name;
 
     const Recognizer = new Hammer[gesture](options);
+    Recognizer.initialize = defer();
 
     this.set(`_recognizers.${name}`, Recognizer);
     return Recognizer;
@@ -62,10 +64,12 @@ export default Service.extend({
           return RSVP.all(excluded).then((recognizers) => {
             Recognizer.requireFailure(recognizers);
             Recognizer.exclude = recognizers;
+            Recognizer.initialize.resolve(Recognizer);
             return Recognizer;
           });
         } else {
           Recognizer.exclude = [];
+          Recognizer.initialize.resolve(Recognizer);
           return Recognizer;
         }
       });
@@ -74,7 +78,7 @@ export default Service.extend({
   lookupRecognizer(name) {
     let recognizer = this.get(`_recognizers.${name}`);
     if (recognizer) {
-      return Promise.resolve(recognizer);
+      return recognizer.initialize.then(function(recognizer) { return recognizer; });
     }
 
     const path = `ember-gesture:recognizers/${name}`;
