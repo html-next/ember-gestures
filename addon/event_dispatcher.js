@@ -118,6 +118,14 @@ export default EventDispatcher.extend({
       events.mouseleave = null;
       events.mouseup = null;
 
+      events.drag = null;
+      events.dragend = null;
+      events.dragenter = null;
+      events.dragleave = null;
+      events.dragover = null;
+      events.dragstart = null;
+      events.drop = null;
+
       events.dblclick = null;
     }
 
