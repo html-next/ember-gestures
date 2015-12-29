@@ -143,8 +143,9 @@ export default EventDispatcher.extend({
       }
 
       rootElement = jQuery(get(this, 'rootElement'));
+      const selector = (rootElement.selector || rootElement[0].tagName);
 
-      assert(`You cannot use the same root element (${(rootElement.selector || rootElement[0].tagName)}) multiple times in an Ember.Application`, !rootElement.is('.ember-application'));
+      assert(`You cannot use the same root element (${selector}) multiple times in an Ember.Application`, !rootElement.is('.ember-application'));
       assert('You cannot make a new Ember.Application using a root element that is a descendent of an existing Ember.Application', !rootElement.closest('.ember-application').length);
       assert('You cannot make a new Ember.Application using a root element that is an ancestor of an existing Ember.Application', !rootElement.find('.ember-application').length);
 
