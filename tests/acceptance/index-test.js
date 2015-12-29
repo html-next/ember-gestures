@@ -3,7 +3,7 @@ import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | index');
 
-test('visiting /index', function(assert) {
+test('visiting /index, ensures we hooked everything up appropriately', function(assert) {
   visit('/');
 
   andThen(function() {

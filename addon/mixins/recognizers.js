@@ -1,5 +1,6 @@
-/*global Hammer*/
 import Ember from 'ember';
+
+const Hammer = window.Hammer;
 
 const {
   inject,

@@ -1,7 +1,8 @@
-/*global Hammer*/
 import Ember from 'ember';
 import camelize from 'ember-allpurpose/string/dasherized-to-camel';
 import capitalize from 'ember-allpurpose/string/capitalize-word';
+
+const Hammer = window.Hammer;
 
 const {
   Service,

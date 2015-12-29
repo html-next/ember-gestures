@@ -16,11 +16,10 @@ const {
 } = run;
 
 export default Component.extend(RecognizerMixin, VelocityMixin, {
-
   tagName: 'slide-toggle',
   classNameBindings: ['_value:isOn:isOff'],
 
-  layout: layout,
+  layout,
 
   recognizers: 'pan tap press',
 
@@ -29,8 +28,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
   _value: false,
   target: null,
 
-  __updateCSS: function (value) {
-
+  __updateCSS(value) {
     if (!value) {
       this.$('.slideToggleButton').removeAttr('style');
     } else {
@@ -53,7 +51,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
   'on-toggle': null,
   _defaultAction: 'slideToggleChange',
 
-  _notify: function() {
+  _notify() {
     let unidirectional = this.get('unidirectional');
     let action = this.get('on-toggle');
     let defaultAction = this.get('_defaultAction');
@@ -73,7 +71,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
 
   },
 
-  _trigger: function (dX) {
+  _trigger(dX) {
 
     this.__updateCSS();
 
@@ -84,7 +82,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
     return false;
   },
 
-  pan: function (e) {
+  pan(e) {
     var allowPanRight = !this.get('_value');
     var dX = e.originalEvent.gesture.deltaX;
 
@@ -100,15 +98,15 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
     return false;
   },
 
-  tap: function () {
+  tap() {
     return this._trigger();
   },
 
-  press: function () {
+  press() {
     return this._trigger();
   },
 
-  init: function() {
+  init() {
     this._super();
 
     var value = this.get('value');
