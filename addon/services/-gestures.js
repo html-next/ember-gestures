@@ -10,7 +10,7 @@ const {
 
 const {
   Promise,  // jshint ignore:line
-  defer
+  defer // jshint ignore:line
 } = RSVP;
 
 export default Service.extend({
@@ -44,7 +44,7 @@ export default Service.extend({
       .then((Recognizer) => {
         if (details.include) {
           const included = details.include.map((name) => {
-            return this.lookupRecognizer(name);
+            return this.__speedyLookupRecognizer(name);
           });
           return RSVP.all(included).then((recognizers) => {
             Recognizer.recognizeWith(recognizers);
@@ -58,7 +58,7 @@ export default Service.extend({
       .then((Recognizer) => {
         if (details.exclude) {
           const excluded = details.exclude.map((name) => {
-            return this.lookupRecognizer(name);
+            return this.__speedyLookupRecognizer(name);
           });
 
           return RSVP.all(excluded).then((recognizers) => {
@@ -75,10 +75,29 @@ export default Service.extend({
       });
   },
 
+  __speedyLookupRecognizer(name) {
+    let recognizer = this.get(`_recognizers.${name}`);
+    if (recognizer) {
+      return recognizer;
+    }
+
+    const path = `ember-gesture:recognizers/${name}`;
+    const details = this.container.lookupFactory(path);
+
+    if (details) {
+      return this.setupRecognizer(name, details);
+    }
+
+    return Promise.reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);
+
+  },
+
   lookupRecognizer(name) {
     let recognizer = this.get(`_recognizers.${name}`);
     if (recognizer) {
-      return recognizer.initialize.then(function(recognizer) { return recognizer; });
+      return recognizer.initialize.promise.then(function(recognizer) {
+        return recognizer;
+      });
     }
 
     const path = `ember-gesture:recognizers/${name}`;
