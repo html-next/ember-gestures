@@ -23,7 +23,7 @@ export default Service.extend({
   },
 
   createRecognizer(name, details) {
-    const eventName = details.eventName || camelize(name).toLowerCase();
+    const eventName = camelize(details.eventName || name).toLowerCase();
     const gesture = capitalize(details.recognizer);
 
     const options = details.options || {};
