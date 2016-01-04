@@ -33,6 +33,9 @@ export default Mixin.create({
     const promise = this.get('recognizers');
     if (promise) {
       promise.then((recognizers) => {
+        if (this.get('isDestroyed')) {
+          return;
+        }
         const manager = this.__manager();
         // sort the recognizers
         for (let i = 0; i < recognizers.length; i++) {
