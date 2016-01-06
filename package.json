@@ -13,10 +13,7 @@
   },
   "homepage": "https://github.com/runspired/ember-gestures",
   "bugs": "https://github.com/runspired/ember-gestures/issues",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:runspired/ember-gestures.git"
-  },
+  "repository": "git@github.com:runspired/ember-gestures.git",
   "engines": {
     "node": ">= 4.1.1"
   },
