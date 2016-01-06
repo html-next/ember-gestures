@@ -20,22 +20,11 @@ module.exports = {
       } else {
         app.import(app.bowerDirectory + '/hammer.js/hammer.js');
       }
-      app.import(app.bowerDirectory + '/hammer-time/hammer-time.js');
     }
   },
 
   isDevelopingAddon: function() {
-    return true;
-  },
-
-  setupPreprocessorRegistry: function(type, registry) {
-    var TouchAction = require('./htmlbars-plugins/touch-action');
-
-    registry.add('htmlbars-ast-plugin', {
-      name: "touch-action",
-      plugin: TouchAction
-    });
-
+    return false;
   }
 
 };

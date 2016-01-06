@@ -59,9 +59,10 @@
     "pointer events"
   ],
   "dependencies": {
+    "ember-allpurpose": "^1.1.0",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-allpurpose": "^1.1.0"
+    "rsvp": "^3.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

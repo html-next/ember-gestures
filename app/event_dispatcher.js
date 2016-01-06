@@ -4,7 +4,7 @@ import config from './config/environment';
 
 let gestures = Ember.merge({}, {
     emberUseCapture: false,
-    removeTracking: true,
+    removeTracking: false,
     useFastPaths: false
   });
 gestures = Ember.merge(gestures, config.gestures);

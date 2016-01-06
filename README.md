@@ -4,14 +4,11 @@ Ember Gestures [![npm version](https://badge.fury.io/js/ember-gestures.svg)](htt
 [![Build Status](https://travis-ci.org/runspired/ember-gestures.svg?branch=master)](https://travis-ci.org/runspired/ember-gestures)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-gestures.svg)](http://emberobserver.com/addons/ember-gestures)
 
-Ember Gestures does two things for your app.
-
-- It uses an AST Walker to add [touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action)
- styles to DOM Elements that need them to work with the [hammer-time](https://github.com/hammerjs/hammer-time)
-  touch-action polyfill.  Hammer-time is a *better* fastclick through polyfill.
-
-- It provides an easy way to use gestures by making it simple to define and use [HammerJS](https://github.com/hammerjs/hammer.js) managers
+Ember Gestures provides an easy way to use gestures by making it simple to define and use [HammerJS](https://github.com/hammerjs/hammer.js) managers
  and recognizers throughout your app.
+
+When installed via `ember install ember-gestures`, it will additionally install [ember-hammertime](https://github.com/runspired/ember-hammertime)
+to use for "fastclick" support.
 
 ## Support, Questions, Collaboration
 
@@ -31,33 +28,8 @@ Join the [addon-ember-gestures](https://embercommunity.slack.com/messages/addon-
 
 `ember install ember-gestures`
 
-This will run the default blueprint which additionally installs `HammerJS` and `hammer-time`.
+This will run the default blueprint which additionally installs `HammerJS`.
 
-#### Using Touch-action as a fastclick
-
-`ember-gestures` uses [hammer-time](https://github.com/hammerjs/hammer-time) as a polyfill for `touch-action` CSS
-to enable cross-platform `fastclick`.  This polyfill works based on the presence of `style="touch-action: <foo>;"`
-being present on an element.
-
-For most things, you'll want the following `style` attribute to be present on the component or element.
-
-```html
-<div style="touch-action: manipulation; -ms-touch-action: manipulation;">
-```
-
-The AST Walker automatically adds this style to elements when any of the following rules is matched.
-
-- The element's tagName is `select`, `button`, `a`, or `textarea`.
-- The element's tagName is `input` and the element's `type` is `button`, `submit`, `text`, or `file`. 
-- The element has an action defined on it (e.g. `<div {{action "foo"}}>`)
-
-All `link-components` (e.g. `{{link-to}}` as well as components made available by `ember-gestures` have
-a bound `style` attribute set to the above as well.
-
-#### Component.click
-
-If your component implements `click`, it will automatically add the touchAction CSS by applying
-the Mixin available in `ember-gestures/mixins/touch-action`.
 
 #### Recognizers and Managers
 

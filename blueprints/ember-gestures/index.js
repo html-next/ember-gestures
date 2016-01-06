@@ -1,3 +1,5 @@
+var RSVP = require('rsvp');
+
 module.exports = {
 
   name: 'ember-gestures',
@@ -6,10 +8,12 @@ module.exports = {
 
   afterInstall: function() {
     var bowerPackages = [
-      { name: 'hammer.js', target: '2.0.6' },
-      { name: 'hammer-time', target: '1.0.0'}
+      { name: 'hammer.js', target: '2.0.6' }
     ];
-    return this.addBowerPackagesToProject(bowerPackages);
+    return RSVP.all([
+      this.addBowerPackagesToProject(bowerPackages),
+      this.addAddonToProject('ember-hammertime', '1.0.0')
+    ]);
   }
 
 };
