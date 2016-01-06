@@ -5,4 +5,4 @@ const {
   Component
 } = Ember;
 
-export default Component.reopenClass(TouchActionMixin);
+export default Component.reopen(TouchActionMixin);
