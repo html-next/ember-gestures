@@ -2,6 +2,7 @@
 import Ember from 'ember';
 import camelize from 'ember-allpurpose/string/dasherized-to-camel';
 import capitalize from 'ember-allpurpose/string/capitalize-word';
+import getOwner from 'ember-getowner-polyfill';
 
 const {
   Service,
@@ -82,7 +83,7 @@ export default Service.extend({
     }
 
     const path = `ember-gesture:recognizers/${name}`;
-    const details = this.container.lookupFactory(path);
+    const details = getOwner(this)._lookupFactory(path);
 
     if (details) {
       return this.setupRecognizer(name, details);
@@ -101,7 +102,7 @@ export default Service.extend({
     }
 
     const path = `ember-gesture:recognizers/${name}`;
-    const details = this.container.lookupFactory(path);
+    const details = getOwner(this)._lookupFactory(path);
 
     if (details) {
       return this.setupRecognizer(name, details);
