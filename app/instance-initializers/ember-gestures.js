@@ -1,3 +1,5 @@
+import getOwner from 'ember-getowner-polyfill';
+
 export default {
   name: 'ember-gestures',
 
@@ -6,7 +8,7 @@ export default {
       instance.lookup('service:-gestures');
     } else {
       // This can be removed when we no-longer support ember 1.12 and 1.13
-      instance.container.lookup('service:-gestures');
+      getOwner(instance).lookup('service:-gestures');
     }
   }
 
