@@ -1,4 +1,3 @@
-/* global Hammer */
 import Ember from 'ember';
 
 const {
