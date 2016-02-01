@@ -1,4 +1,3 @@
-/*global Hammer*/
 export default {
   include: [],
   exclude: [],
