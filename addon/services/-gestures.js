@@ -88,7 +88,7 @@ export default Service.extend({
       return this.setupRecognizer(name, details);
     }
 
-    return Promise.reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);
+    return Promise.reject(new Error(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`));
 
   },
 
@@ -107,7 +107,7 @@ export default Service.extend({
       return this.setupRecognizer(name, details);
     }
 
-    return Promise.reject(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`);
+    return Promise.reject(new Error(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`));
   },
 
   init() {
