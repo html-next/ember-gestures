@@ -14,10 +14,12 @@ module.exports = {
     var addonPackages = [
       {name: 'ember-hammertime', target: '1.0.0'}
     ];
+
     var checker = new VersionChecker(this);
     if (checker.for('ember', 'bower').satisfies('>= 2.3')) {
       addonPackages.push({name: 'ember-getowner-polyfill', target: '^1.0.0'});
     }
+
     return RSVP.all([
       this.addBowerPackagesToProject(bowerPackages),
       this.addAddonsToProject({ packages: addonPackages })
