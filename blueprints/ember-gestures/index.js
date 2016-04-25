@@ -1,4 +1,3 @@
-var RSVP = require('rsvp');
 var VersionChecker = require('ember-cli-version-checker');
 
 module.exports = {
@@ -13,10 +12,10 @@ module.exports = {
       { name: 'hammer.js', target: '2.0.6' }
     ];
     var addonPackages = [
-      {name: 'ember-hammertime', target: '1.0.0'}
+      { name: 'ember-hammertime', target: '1.0.0' }
     ];
 
-    var checker = new VersionChecker(this);
+    var checker = new VersionChecker(addon);
     if (checker.for('ember', 'bower').satisfies('>= 2.3')) {
       addonPackages.push({name: 'ember-getowner-polyfill', target: '^1.0.0'});
     }
