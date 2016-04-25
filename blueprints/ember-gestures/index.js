@@ -8,6 +8,7 @@ module.exports = {
   normalizeEntityName: function() {},
 
   afterInstall: function() {
+    var addon = this;
     var bowerPackages = [
       { name: 'hammer.js', target: '2.0.6' }
     ];
@@ -20,10 +21,8 @@ module.exports = {
       addonPackages.push({name: 'ember-getowner-polyfill', target: '^1.0.0'});
     }
 
-    return RSVP.all([
-      this.addBowerPackagesToProject(bowerPackages),
-      this.addAddonsToProject({ packages: addonPackages })
-    ]);
+    return addon.addBowerPackagesToProject(bowerPackages).then(function() {
+      return addon.addAddonsToProject({ packages: addonPackages });
+    });
   }
-
 };
