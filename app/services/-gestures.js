@@ -2,10 +2,21 @@ import Ember from 'ember';
 import config from '../config/environment';
 import Service from 'ember-gestures/services/-gestures';
 
-let gestures = Ember.merge({}, {
+const {
+	isEmpty
+} = Ember;
+
+let merge;
+if (!isEmpty(Ember.assign)) {
+	merge = Ember.assign;
+} else {
+	merge = Ember.merge;
+}
+
+let gestures = merge({}, {
   useCapture: false
 });
-gestures = Ember.merge(gestures, config.gestures);
+gestures = merge(gestures, config.gestures);
 
 export default Service.extend({
   useCapture: gestures.useCapture
