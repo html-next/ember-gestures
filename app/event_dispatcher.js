@@ -2,12 +2,14 @@ import Ember from 'ember';
 import EventDispatcher from 'ember-gestures/event_dispatcher';
 import config from './config/environment';
 
-let gestures = Ember.merge({}, {
+const merge = Ember.assign || Ember.merge;
+
+let gestures = merge({}, {
     emberUseCapture: false,
     removeTracking: false,
     useFastPaths: false
   });
-gestures = Ember.merge(gestures, config.gestures);
+gestures = merge(gestures, config.gestures);
 
 export default EventDispatcher.extend({
   useCapture: gestures.emberUseCapture,
