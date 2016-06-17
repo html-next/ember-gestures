@@ -4,6 +4,7 @@ import capitalize from 'ember-allpurpose/string/capitalize-word';
 import getOwner from 'ember-getowner-polyfill';
 
 const {
+  computed,
   Service,
   RSVP
 } = Ember;
@@ -16,6 +17,11 @@ const {
 export default Service.extend({
 
   _recognizers: null,
+  _fastboot: computed(function() {
+    let owner = getOwner(this);
+
+    return owner.lookup('service:fastboot');
+  }),
 
   retrieve(names) {
     let promises = names.map((name) => { return this.lookupRecognizer(name); });
@@ -38,6 +44,7 @@ export default Service.extend({
   },
 
   setupRecognizer(name, details) {
+    if (this.get('_fastboot.isFastBoot')) { return; }
     return Promise.resolve(this.createRecognizer(name, details))
 
       // includes
