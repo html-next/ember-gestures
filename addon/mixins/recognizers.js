@@ -9,6 +9,7 @@ const {
 export default Mixin.create({
 
   '-gestures': inject.service('-gestures'),
+  fastboot: inject.service(),
 
   recognizers: null,
   managerOptions: null,
@@ -71,6 +72,7 @@ export default Mixin.create({
 
   init() {
     this._super();
+    if (this.get('fastboot.isFastBoot')) { return; }
 
     // setup recognizers
     let recognizers = this.get('recognizers');
