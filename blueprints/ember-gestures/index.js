@@ -12,7 +12,7 @@ module.exports = {
     ];
     return RSVP.all([
       this.addBowerPackagesToProject(bowerPackages),
-      this.addAddonToProject('ember-hammertime', '1.0.0')
+      this.addAddonToProject({ name:'ember-hammertime', target:'1.0.0' })
     ]);
   }
 
