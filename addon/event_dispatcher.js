@@ -84,7 +84,7 @@ export default EventDispatcher.extend({
         if ($element.is('textarea') || ($element.is('input') && notFocusableTypes.indexOf($element.attr('type')) === -1) && !$element.hasClass('no-fast-focus')) {
           $element.focus();
 
-        } else if ($target.is('textarea') || ($target.is('input') && notFocusableTypes.indexOf($target.attr('type')) === -1) && !$element.hasClass('no-fast-focus')) {
+        } else if ($target.is('textarea') || ($target.is('input') && notFocusableTypes.indexOf($target.attr('type')) === -1) && !$target.hasClass('no-fast-focus')) {
           $target.focus();
         }
       }
