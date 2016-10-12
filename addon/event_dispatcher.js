@@ -62,7 +62,7 @@ export default EventDispatcher.extend({
 
   _fastFocus() {
     let $root = jQuery(this.get('rootElement'));
-    $root.on('click.ember-gestures, touchend.ember-gestures', function (e) {
+    $root.on('click.ember-gestures touchend.ember-gestures', function (e) {
 
       /*
        Implements fastfocus mechanisms on mobile web/Cordova
