@@ -65,7 +65,7 @@
     "pointer events"
   ],
   "dependencies": {
-    "ember-cli-version-checker": "^1.1.6",
+    "ember-cli-version-checker": "^1.2.0",
     "ember-allpurpose": "^1.1.0",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
