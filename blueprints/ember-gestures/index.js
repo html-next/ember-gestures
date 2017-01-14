@@ -16,7 +16,7 @@ module.exports = {
     ];
 
     var checker = new VersionChecker(addon);
-    if (checker.for('ember', 'bower').satisfies('>= 2.3')) {
+    if (checker.forEmber().satisfies('>= 2.3') === false) {
       addonPackages.push({name: 'ember-getowner-polyfill', target: '^1.0.0'});
     }
 

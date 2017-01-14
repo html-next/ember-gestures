@@ -1,6 +1,6 @@
 export default {
   include: [],
   exclude: [],
-  options: { direction: Hammer.DIRECTION_HORIZONTAL },
+  options: { direction: typeof Hammer === 'undefined' ? '' : Hammer.DIRECTION_HORIZONTAL },
   recognizer: 'pan'
 };
