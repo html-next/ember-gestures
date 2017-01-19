@@ -161,12 +161,14 @@ export default EventDispatcher.extend({
 
     assert(`Unable to add '${ROOT_ELEMENT_CLASS}' class to rootElement. Make sure you set rootElement to the body or an element in the body.`, rootElement.is(ROOT_ELEMENT_SELECTOR));
 
+    // needed for Ember 2.12+ support (setupHandler takes 4 args)
+    let viewRegistry = this._getViewRegistry && this._getViewRegistry();
+
     for (event in events) {
       if (events.hasOwnProperty(event)) {
-        this.setupHandler(rootElement, event, events[event]);
+        this.setupHandler(rootElement, event, events[event], viewRegistry);
       }
     }
-
   }
 
 });
