@@ -197,7 +197,7 @@ function getModuleList() {
   const list = [];
 
   for(var moduleName in requirejs.entries) {
-    if (requirejs.entries.hasOwnProperty(moduleName)) {
+    if (Object.prototype.hasOwnProperty.call(requirejs.entries, moduleName)) {
       const parts = moduleName.match(/ember-gestures\/recognizers\/(.*)/);
 
       if (parts && parts[1].indexOf('jshint') === -1) {
