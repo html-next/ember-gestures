@@ -2,7 +2,6 @@ import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
 
 const {
-  computed,
   inject,
   Mixin,
   on
@@ -11,12 +10,6 @@ const {
 export default Mixin.create({
 
   '-gestures': inject.service('-gestures'),
-
-  __fastboot: computed(function() {
-    let owner = getOwner(this);
-
-    return owner.lookup('service:fastboot');
-  }),
 
   recognizers: null,
   managerOptions: null,
@@ -37,8 +30,6 @@ export default Mixin.create({
   },
 
   __setupRecognizers: on('didInsertElement', function() {
-    if (this.get('__fastboot.isFastBoot')) { return; }
-
     const promise = this.get('recognizers');
     if (promise) {
       promise.then((recognizers) => {
@@ -81,6 +72,7 @@ export default Mixin.create({
 
   init() {
     this._super();
+    if (getOwner(this).hasRegistration('service:fastboot') && getOwner(this).lookup('service:fastboot').get('isFastBoot')) { return; }
 
     // setup recognizers
     let recognizers = this.get('recognizers');
