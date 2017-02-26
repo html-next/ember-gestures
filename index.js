@@ -16,9 +16,9 @@ module.exports = {
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
       if (app.env === "production") {
-        app.import(app.bowerDirectory + '/hammer.js/hammer.min.js');
+        app.import(app.bowerDirectory + '/hammerjs/hammer.min.js');
       } else {
-        app.import(app.bowerDirectory + '/hammer.js/hammer.js');
+        app.import(app.bowerDirectory + '/hammerjs/hammer.js');
       }
     }
   },
