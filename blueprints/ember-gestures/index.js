@@ -12,7 +12,7 @@ module.exports = {
       { name: 'hammer.js', target: '2.0.6' }
     ];
     var addonPackages = [
-      { name: 'ember-hammertime', target: '1.0.0' }
+      { name: 'ember-hammertime', target: '^1.1.2' }
     ];
 
     var checker = new VersionChecker(addon);
