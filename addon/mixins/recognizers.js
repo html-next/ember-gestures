@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
 const {
   computed,
+  getOwner,
   inject,
   Mixin,
   on
