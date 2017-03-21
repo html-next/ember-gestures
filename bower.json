@@ -8,9 +8,5 @@
     "ember-qunit-notifications": "0.1.0",
     "animation-frame": "~0.2.4",
     "marked": "~0.3.5"
-  },
-  "devDependencies": {
-    "hammer-time": "1.0.0",
-    "hammer.js": "2.0.6"
   }
 }

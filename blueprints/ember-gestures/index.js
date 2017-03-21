@@ -8,9 +8,7 @@ module.exports = {
 
   afterInstall: function() {
     var addon = this;
-    var bowerPackages = [
-      { name: 'hammer.js', target: '2.0.6' }
-    ];
+
     var addonPackages = [
       { name: 'ember-hammertime', target: '^1.1.2' }
     ];
@@ -21,8 +19,6 @@ module.exports = {
       addonPackages.push({name: 'ember-getowner-polyfill', target: '^1.0.0'});
     }
 
-    return addon.addBowerPackagesToProject(bowerPackages).then(function() {
-      return addon.addAddonsToProject({ packages: addonPackages });
-    });
+    return addon.addAddonsToProject({ packages: addonPackages })
   }
 };
