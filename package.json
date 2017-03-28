@@ -50,7 +50,6 @@
     "liquid-fire": "0.23.0",
     "loader.js": "^4.0.1",
     "ember-cli-content-security-policy": "^0.4.0",
-    "ember-getowner-polyfill": "^1.2.2",
     "ember-velocity-mixin": "0.3.0"
   },
   "keywords": [
@@ -69,6 +68,7 @@
     "ember-allpurpose": "^1.1.0",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
+    "ember-getowner-polyfill": "^1.2.2",
     "rsvp": "^3.1.0"
   },
   "ember-addon": {
