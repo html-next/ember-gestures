@@ -3,7 +3,6 @@ import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from 'ember-allpurpose/string/dasherized-to-camel';
 import jQuery from 'jquery';
 import mobileDetection from './utils/is-mobile';
-import getOwner from 'ember-getowner-polyfill';
 
 let ROOT_ELEMENT_CLASS = 'ember-application';
 let ROOT_ELEMENT_SELECTOR = '.' + ROOT_ELEMENT_CLASS;
@@ -20,6 +19,7 @@ const eventEndings = {
 const {
   assert,
   EventDispatcher,
+  getOwner,
   merge,
   isNone,
   set,
@@ -48,10 +48,10 @@ export default EventDispatcher.extend({
     const events = assign({}, defaultHammerEvents);
 
     list.forEach((name) => {
-      const recognizer = getOwner(this)._lookupFactory('ember-gesture:recognizers/' + name);
+      const recognizer = getOwner(this).factoryFor('ember-gesture:recognizers/' + name);
 
       if (recognizer) {
-        addEvent(events, recognizer.recognizer, recognizer.eventName || name);
+        addEvent(events, recognizer.class.recognizer, recognizer.class.eventName || name);
       }
     });
 

@@ -19,17 +19,13 @@ module.exports = {
     }
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
-      if (app.env === "production") {
-        app.import('vendor/hammer.min.js');
-      } else {
-        app.import('vendor/hammer.js');
-      }
+      app.import('vendor/hammer.js');
     }
   },
 
   treeForVendor(vendorTree) {
-    let hammerTree = new Funnel(path.dirname(require.resolve('hammerjs/hammer.js')), {
-      files: ['hammer.js', 'hammer.min.js']
+    let hammerTree = new Funnel(path.dirname(require.resolve('hammerjs')), {
+      files: ['hammer.js']
     });
 
     return new MergeTrees([vendorTree, hammerTree]);

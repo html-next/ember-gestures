@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import camelize from 'ember-allpurpose/string/dasherized-to-camel';
 import capitalize from 'ember-allpurpose/string/capitalize-word';
-import getOwner from 'ember-getowner-polyfill';
 
 const {
   computed,
+  getOwner,
   Service,
   RSVP
 } = Ember;
@@ -89,10 +89,10 @@ export default Service.extend({
     }
 
     const path = `ember-gesture:recognizers/${name}`;
-    const details = getOwner(this)._lookupFactory(path);
+    const details = getOwner(this).factoryFor(path);
 
     if (details) {
-      return this.setupRecognizer(name, details);
+      return this.setupRecognizer(name, details.class);
     }
 
     return Promise.reject(new Error(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`));
@@ -108,10 +108,10 @@ export default Service.extend({
     }
 
     const path = `ember-gesture:recognizers/${name}`;
-    const details = getOwner(this)._lookupFactory(path);
+    const details = getOwner(this).factoryFor(path);
 
     if (details) {
-      return this.setupRecognizer(name, details);
+      return this.setupRecognizer(name, details.class);
     }
 
     return Promise.reject(new Error(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`));
