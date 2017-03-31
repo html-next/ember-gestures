@@ -2,6 +2,10 @@
 /* global process */
 'use strict';
 
+let path = require('path');
+let Funnel = require('broccoli-funnel');
+let MergeTrees = require('broccoli-merge-trees');
+
 module.exports = {
 
   name: 'ember-gestures',
@@ -15,12 +19,16 @@ module.exports = {
     }
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
-      if (app.env === "production") {
-        app.import(app.bowerDirectory + '/hammer.js/hammer.min.js');
-      } else {
-        app.import(app.bowerDirectory + '/hammer.js/hammer.js');
-      }
+      app.import('vendor/hammer.js');
     }
+  },
+
+  treeForVendor(vendorTree) {
+    let hammerTree = new Funnel(path.dirname(require.resolve('hammerjs')), {
+      files: ['hammer.js']
+    });
+
+    return new MergeTrees([vendorTree, hammerTree]);
   },
 
   isDevelopingAddon: function() {
