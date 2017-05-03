@@ -30,6 +30,13 @@ Join the [addon-ember-gestures](https://embercommunity.slack.com/messages/addon-
 
 This will run the default blueprint which additionally installs `HammerJS`.
 
+**Requirements**
+
+Ember Versions prior to 2.3 will need the [`getOwner`](https://github.com/rwjblue/ember-getowner-polyfill) polyfill: 
+```sh
+ember install ember-getowner-polyfill
+```
+
 
 #### Recognizers and Managers
 
