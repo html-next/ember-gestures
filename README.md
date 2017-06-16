@@ -1,7 +1,7 @@
 Ember Gestures [![npm version](https://badge.fury.io/js/ember-gestures.svg)](http://badge.fury.io/js/ember-gestures)
 ==============
 
-[![Build Status](https://travis-ci.org/runspired/ember-gestures.svg?branch=master)](https://travis-ci.org/runspired/ember-gestures)
+[![Build Status](https://travis-ci.org/html-next/ember-gestures.svg?branch=master)](https://travis-ci.org/html-next/ember-gestures)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-gestures.svg)](http://emberobserver.com/addons/ember-gestures)
 
 Ember Gestures provides an easy way to use gestures by making it simple to define and use [HammerJS](https://github.com/hammerjs/hammer.js) managers
@@ -21,8 +21,8 @@ Join the [addon-ember-gestures](https://embercommunity.slack.com/messages/addon-
 
 [Changelog](./CHANGELOG.md)
 
-[![dependencies](https://david-dm.org/runspired/ember-gestures.svg)](https://david-dm.org/runspired/ember-gestures)
-[![devDependency Status](https://david-dm.org/runspired/ember-gestures/dev-status.svg)](https://david-dm.org/runspired/ember-gestures#info=devDependencies)
+[![dependencies](https://david-dm.org/html-next/ember-gestures.svg)](https://david-dm.org/html-next/ember-gestures)
+[![devDependency Status](https://david-dm.org/html-next/ember-gestures/dev-status.svg)](https://david-dm.org/runspired/ember-gestures#info=devDependencies)
 
 ## Usage
 
