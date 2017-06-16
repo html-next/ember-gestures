@@ -11,9 +11,9 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "homepage": "https://github.com/runspired/ember-gestures",
-  "bugs": "https://github.com/runspired/ember-gestures/issues",
-  "repository": "git@github.com:runspired/ember-gestures.git",
+  "homepage": "https://github.com/html-next/ember-gestures",
+  "bugs": "https://github.com/html-next/ember-gestures/issues",
+  "repository": "git@github.com:html-next/ember-gestures.git",
   "engines": {
     "node": ">= 4.1.1"
   },
