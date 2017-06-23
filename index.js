@@ -27,6 +27,10 @@ module.exports = {
       files: ['hammer.js']
     });
 
+    if (typeof vendorTree === 'undefined') {
+      return hammerTree;
+    }
+
     return new MergeTrees([vendorTree, hammerTree]);
   },
 
