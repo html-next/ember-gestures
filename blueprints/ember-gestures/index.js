@@ -1,24 +1,23 @@
-var VersionChecker = require('ember-cli-version-checker');
+const VersionChecker = require('ember-cli-version-checker');
 
 module.exports = {
 
   name: 'ember-gestures',
 
-  normalizeEntityName: function() {},
+  normalizeEntityName: function() {
+  },
 
   afterInstall: function() {
-    var addon = this;
-
-    var addonPackages = [
-      { name: 'ember-hammertime', target: '^1.1.2' }
+    const packages = [
+      { name: 'ember-hammertime', target: '^1.2.3' }
     ];
 
-    var checker = new VersionChecker(addon);
+    const checker = new VersionChecker(this);
 
     if (checker.forEmber().satisfies('< 2.3')) {
-      addonPackages.push({name: 'ember-getowner-polyfill', target: '^1.0.0'});
+      packages.push({ name: 'ember-getowner-polyfill', target: '^1.2.3' });
     }
 
-    return addon.addAddonsToProject({ packages: addonPackages })
+    return this.addAddonsToProject({ packages });
   }
 };
