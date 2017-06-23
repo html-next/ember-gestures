@@ -2,56 +2,6 @@
   "name": "ember-gestures",
   "version": "0.4.4",
   "description": "TouchAction and Gesture support for Ember Applications",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
-  "scripts": {
-    "start": "ember server",
-    "build": "ember build",
-    "test": "ember try:testall"
-  },
-  "homepage": "https://github.com/html-next/ember-gestures",
-  "bugs": "https://github.com/html-next/ember-gestures/issues",
-  "repository": "git@github.com:html-next/ember-gestures.git",
-  "engines": {
-    "node": ">= 4.1.1"
-  },
-  "author": {
-    "name": "Chris Thoburn (@runspired)",
-    "url": "http://runspired.com"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "broccoli-asset-rev": "^2.2.0",
-    "broccoli-stew": "^1.2.0",
-    "ember-cli": "2.4.2",
-    "ember-cli-app-version": "^1.0.0",
-    "ember-cli-changelog": "0.3.4",
-    "ember-cli-dependency-checker": "^1.2.0",
-    "ember-cli-github-pages": "0.0.8",
-    "ember-cli-htmlbars-inline-precompile": "^0.3.1",
-    "ember-cli-inject-live-reload": "^1.4.0",
-    "ember-cli-qunit": "^1.3.0",
-    "ember-cli-release": "0.2.8",
-    "ember-cli-sri": "^2.1.0",
-    "ember-cli-uglify": "^1.2.0",
-    "ember-code-snippet": "^1.2.1",
-    "ember-disable-prototype-extensions": "^1.1.0",
-    "ember-disable-proxy-controllers": "^1.0.1",
-    "ember-export-application-global": "^1.0.4",
-    "ember-hammertime": "^1.1.2",
-    "ember-load-initializers": "^0.5.0",
-    "ember-resolver": "^2.0.3",
-    "ember-run-raf": "1.1.1",
-    "ember-suave": "^2.0.1",
-    "ember-try": "0.2.2",
-    "jscs": "^2.9.0",
-    "liquid-fire": "0.23.0",
-    "loader.js": "^4.0.1",
-    "ember-cli-content-security-policy": "^0.4.0",
-    "ember-velocity-mixin": "0.3.0"
-  },
   "keywords": [
     "ember-addon",
     "mobile",
@@ -63,16 +13,69 @@
     "touch action",
     "pointer events"
   ],
+  "license": "MIT",
+  "author": {
+    "name": "Chris Thoburn (@runspired)",
+    "url": "http://runspired.com"
+  },
+  "contributors": [
+    {
+      "name": "Robert Wagner",
+      "email": "rwwagner90@gmail.com",
+      "url": "https://github.com/rwwagner90"
+    }
+  ],
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "repository": "git@github.com:html-next/ember-gestures.git",
+  "scripts": {
+    "start": "ember server",
+    "build": "ember build",
+    "test": "ember try:each"
+  },
+  "homepage": "https://github.com/html-next/ember-gestures",
+  "bugs": "https://github.com/html-next/ember-gestures/issues",
   "dependencies": {
     "broccoli-funnel": "^1.1.0",
     "broccoli-merge-trees": "^2.0.0",
     "ember-cli-version-checker": "^1.2.0",
     "ember-allpurpose": "^1.1.0",
-    "ember-cli-babel": "^5.1.5",
-    "ember-cli-htmlbars": "^1.0.1",
+    "ember-cli-babel": "^6.0.0",
+    "ember-cli-htmlbars": "^2.0.1",
     "ember-getowner-polyfill": "^1.2.2",
     "hammerjs": "^2.0.8",
     "rsvp": "^3.1.0"
+  },
+  "devDependencies": {
+    "broccoli-asset-rev": "^2.4.5",
+    "broccoli-stew": "^1.2.0",
+    "ember-cli": "~2.14.0-beta.2",
+    "ember-cli-changelog": "0.3.4",
+    "ember-cli-dependency-checker": "^1.3.0",
+    "ember-cli-eslint": "^3.0.0",
+    "ember-cli-htmlbars-inline-precompile": "^0.4.3",
+    "ember-cli-inject-live-reload": "^1.4.1",
+    "ember-cli-qunit": "^4.0.0",
+    "ember-cli-release": "0.2.8",
+    "ember-cli-shims": "^1.1.0",
+    "ember-cli-sri": "^2.1.0",
+    "ember-cli-uglify": "^1.2.0",
+    "ember-code-snippet": "^1.2.1",
+    "ember-disable-prototype-extensions": "^1.1.0",
+    "ember-export-application-global": "^2.0.0",
+    "ember-hammertime": "^1.2.3",
+    "ember-load-initializers": "^1.0.0",
+    "ember-resolver": "^4.0.0",
+    "ember-source": "~2.14.0-beta.1",
+    "ember-run-raf": "runspired/ember-run-raf",
+    "ember-velocity-mixin": "0.3.0",
+    "liquid-fire": "0.27.3",
+    "loader.js": "^4.2.3"
+  },
+  "engines": {
+    "node": ">= 4"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
