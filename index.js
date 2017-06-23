@@ -1,5 +1,4 @@
-// jshint node:true
-/* global process */
+/* eslint-env node */
 'use strict';
 
 let path = require('path');
