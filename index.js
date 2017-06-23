@@ -23,11 +23,18 @@ module.exports = {
   },
 
   treeForVendor(vendorTree) {
+    let trees = [];
     let hammerTree = new Funnel(path.dirname(require.resolve('hammerjs')), {
       files: ['hammer.js']
     });
 
-    return new MergeTrees([vendorTree, hammerTree]);
+    if (vendorTree !== undefined) {
+      trees.push(vendorTree);
+    }
+
+    trees.push(hammerTree);
+
+    return new MergeTrees(trees);
   },
 
   isDevelopingAddon: function() {
