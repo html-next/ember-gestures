@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
-import dasherizedToCamel from 'ember-allpurpose/string/dasherized-to-camel';
+import dasherizedToCamel from './utils/string/dasherized-to-camel';
 import jQuery from 'jquery';
 import mobileDetection from './utils/is-mobile';
 

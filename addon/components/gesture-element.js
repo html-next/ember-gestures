@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/gesture-element';
 import RecognizerMixin from '../mixins/recognizers';
-import toCamel from 'ember-allpurpose/string/dasherized-to-camel';
+import toCamel from '../utils/string/dasherized-to-camel';
 
 const {
   Component,
