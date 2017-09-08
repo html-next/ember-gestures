@@ -9,7 +9,7 @@ module.exports = {
 
   afterInstall: function() {
     const packages = [
-      { name: 'ember-hammertime', target: '^1.2.3' }
+      { name: 'ember-hammertime', target: '^1.2.4' }
     ];
 
     const checker = new VersionChecker(this);
