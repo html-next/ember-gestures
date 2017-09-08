@@ -2657,12 +2657,6 @@ ember-router-generator@^1.0.0, ember-router-generator@^1.2.3:
   dependencies:
     recast "^0.11.3"
 
-ember-run-raf@runspired/ember-run-raf:
-  version "1.1.2"
-  resolved "https://codeload.github.com/runspired/ember-run-raf/tar.gz/f3797adfba8b225db16b43351fc032232f60187e"
-  dependencies:
-    ember-cli-babel "^5.1.5"
-
 ember-source@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-2.15.0.tgz#901cbe3abee09292372b06f6aa8dd342683be2d5"
