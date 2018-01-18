@@ -1,6 +1,8 @@
 Ember Gestures [![npm version](https://badge.fury.io/js/ember-gestures.svg)](http://badge.fury.io/js/ember-gestures)
 ==============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/html-next/ember-gestures.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/html-next/ember-gestures.svg?branch=master)](https://travis-ci.org/html-next/ember-gestures)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-gestures.svg)](http://emberobserver.com/addons/ember-gestures)
 
