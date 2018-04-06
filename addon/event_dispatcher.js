@@ -1,12 +1,9 @@
-import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { merge, assign as _assign } from '@ember/polyfills';
-import { isNone } from '@ember/utils';
-import { get, set } from '@ember/object';
+import { get } from '@ember/object';
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from './utils/string/dasherized-to-camel';
-import jQuery from 'jquery';
 import mobileDetection from './utils/is-mobile';
 
 const {
@@ -14,19 +11,20 @@ const {
 } = Ember;
 
 
-let ROOT_ELEMENT_CLASS = 'ember-application';
-let ROOT_ELEMENT_SELECTOR = '.' + ROOT_ELEMENT_CLASS;
-
 const eventEndings = {
-  pan: ['Start','Move', 'End', 'Cancel', 'Left', 'Right', 'Up', 'Down'],
-  pinch: ['Start','Move', 'End', 'Cancel', 'In', 'Out'],
+  pan: ['Start', 'Move', 'End', 'Cancel', 'Left', 'Right', 'Up', 'Down'],
+  pinch: ['Start', 'Move', 'End', 'Cancel', 'In', 'Out'],
   press: ['Up'],
-  rotate: ['Start','Move', 'End', 'Cancel'],
+  rotate: ['Start', 'Move', 'End', 'Cancel'],
   swipe: ['Left', 'Right', 'Up', 'Down'],
   tap: []
 };
 
 const assign = _assign || merge;
+
+const notFocusableTypes = ['submit', 'file', 'button', 'hidden', 'reset', 'range', 'radio', 'image', 'checkbox'];
+
+const fastFocusEvents = ['click', 'touchend'];
 
 export default EventDispatcher.extend({
 
@@ -59,50 +57,69 @@ export default EventDispatcher.extend({
   },
 
   _fastFocus() {
-    let $root = jQuery(this.get('rootElement'));
-    $root.on('click.ember-gestures touchend.ember-gestures', function (e) {
+    let rootElementSelector = get(this, 'rootElement');
+    let rootElement;
+    if (rootElementSelector.nodeType) {
+      rootElement = rootElementSelector;
+    } else {
+      rootElement = document.querySelector(rootElementSelector);
+    }
 
-      /*
-       Implements fastfocus mechanisms on mobile web/Cordova
-       */
-      if (mobileDetection.is()) {
-        var $element = jQuery(e.currentTarget);
-        var $target = jQuery(e.target);
+    fastFocusEvents.forEach((event) => {
+      let listener = this._gestureEvents[event] = (e) => {
+        if (mobileDetection.is()) {
+          let element = e.currentTarget;
+          let target = e.target;
 
-        /*
-         If the click was on an input element that needs to be able to focus, recast
-         the click as a "focus" event.
-         This fixes tap events on mobile where keyboardShrinksView or similar is true.
-         Such devices depend on the ghost click to trigger focus, but the ghost click
-         will never reach the element.
-         */
-        var notFocusableTypes = ['submit', 'file', 'button', 'hidden', 'reset', 'range', 'radio', 'image', 'checkbox'];
+          /*
+           If the click was on an input element that needs to be able to focus, recast
+           the click as a "focus" event.
+           This fixes tap events on mobile where keyboardShrinksView or similar is true.
+           Such devices depend on the ghost click to trigger focus, but the ghost click
+           will never reach the element.
+           */
 
-        //fastfocus
-        if ($element.is('textarea') || ($element.is('input') && notFocusableTypes.indexOf($element.attr('type')) === -1)) {
-          $element.focus();
+          //fastfocus
+          if (element.tagName === 'TEXTAREA' || (element.tagName === 'INPUT' && notFocusableTypes.indexOf(element.getAttribute('type')) === -1)) {
+            element.focus();
 
-        } else if ($target.is('textarea') || ($target.is('input') && notFocusableTypes.indexOf($target.attr('type')) === -1)) {
-          $target.focus();
+          } else if (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && notFocusableTypes.indexOf(target.getAttribute('type')) === -1)) {
+            target.focus();
+          }
         }
-      }
-
+      };
+      rootElement.addEventListener(event, listener);
     });
-
   },
 
   willDestroy() {
-    jQuery(this.get('rootElement')).off('.ember-gestures');
+    let rootElementSelector = get(this, 'rootElement');
+    let rootElement;
+    if (rootElementSelector.nodeType) {
+      rootElement = rootElementSelector;
+    } else {
+      rootElement = document.querySelector(rootElementSelector);
+    }
+
+    if (rootElement) {
+      for (let event in this._gestureEvents) {
+        rootElement.removeEventListener(event, this._gestureEvents[event]);
+        delete this._gestureEvents[event];
+      }
+    }
     this._super(...arguments);
   },
 
   _finalEvents: null,
 
+  init() {
+    this._gestureEvents = Object.create(null);
+    this._super(...arguments);
+  },
+
   setup(addedEvents, rootElement) {
     this._initializeGestures();
-    const events = this._finalEvents = assign({}, get(this, 'events'));
-
-    let event;
+    let events = assign({}, get(this, 'events'));
 
     // remove undesirable events from Ember's Eventing
     if (this.get('removeTracking')) {
@@ -128,50 +145,26 @@ export default EventDispatcher.extend({
       events.dblclick = null;
     }
 
-    // assign custom events into Ember's Eventing
-    assign(events, addedEvents || {});
-
     // delete unwanted events
-    for (event in events) {
-      if (events.hasOwnProperty(event)) {
-        if (!events[event]) {
-          delete events[event];
-        }
+    for (let event in events) {
+      if (events.hasOwnProperty(event) && !events[event]) {
+        delete events[event];
       }
     }
 
-    // assign our events into Ember's Eventing
-    assign(events, this.get('_gestures'));
+    // override default events
+    this.set('events', events);
 
-    if (!isNone(rootElement)) {
-      set(this, 'rootElement', rootElement);
-    }
+    // add our events to addition events
+    let additionalEvents = assign({}, addedEvents);
+    additionalEvents = assign(additionalEvents, this.get('_gestures'));
+
     this._fastFocus();
 
-
-    rootElement = jQuery(get(this, 'rootElement'));
-
-    assert(`You cannot use the same root element (${rootElement.selector || rootElement[0].tagName}) multiple times in an Ember.Application`, !rootElement.is(ROOT_ELEMENT_SELECTOR));
-    assert('You cannot make a new Ember.Application using a root element that is a descendent of an existing Ember.Application', !rootElement.closest(ROOT_ELEMENT_SELECTOR).length);
-    assert('You cannot make a new Ember.Application using a root element that is an ancestor of an existing Ember.Application', !rootElement.find(ROOT_ELEMENT_SELECTOR).length);
-
-    rootElement.addClass(ROOT_ELEMENT_CLASS);
-
-    assert(`Unable to add '${ROOT_ELEMENT_CLASS}' class to rootElement. Make sure you set rootElement to the body or an element in the body.`, rootElement.is(ROOT_ELEMENT_SELECTOR));
-
-    // needed for Ember 2.12+ support (setupHandler takes 4 args)
-    let viewRegistry = this._getViewRegistry && this._getViewRegistry();
-
-    for (event in events) {
-      if (events.hasOwnProperty(event)) {
-        this.setupHandler(rootElement, event, events[event], viewRegistry);
-      }
-    }
+    return this._super(additionalEvents, rootElement);
   }
 
 });
-
-
 
 function addEvent(hash, gesture, name) {
   const eventName = dasherizedToCamel(name);
@@ -186,7 +179,6 @@ function addEvent(hash, gesture, name) {
   });
 }
 
-
 // this function can be replaced in ember 1.13 with a private api
 // and in ember 2.0 with a potentially public api matching 1.13's
 // private api. This is a stop gap for pre-ember 1.13
@@ -194,7 +186,7 @@ function getModuleList() {
   /* global requirejs */
   const list = [];
 
-  for(var moduleName in requirejs.entries) {
+  for (let moduleName in requirejs.entries) {
     if (Object.prototype.hasOwnProperty.call(requirejs.entries, moduleName)) {
       const parts = moduleName.match(/ember-gestures\/recognizers\/(.*)/);
 
