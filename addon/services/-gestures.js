@@ -1,13 +1,9 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { getOwner } from '@ember/application';
+import Service from '@ember/service';
+import RSVP from 'rsvp';
 import camelize from '../utils/string/dasherized-to-camel';
 import capitalize from '../utils/string/capitalize-word';
-
-const {
-  computed,
-  getOwner,
-  Service,
-  RSVP
-} = Ember;
 
 const {
   Promise,  // jshint ignore:line

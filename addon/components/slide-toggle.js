@@ -1,14 +1,10 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import { run } from '@ember/runloop';
+import { copy } from '@ember/object/internals';
+import Component from '@ember/component';
 import VelocityMixin from 'ember-velocity-mixin';
 import RecognizerMixin from '../mixins/recognizers';
 import layout from '../templates/components/slide-toggle';
-
-const {
-  run,
-  copy,
-  computed,
-  Component
-} = Ember;
 
 const {
   throttle,
@@ -113,7 +109,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
 
     // setup unidirection flow if desired
     if (!this.get('unidirectional')) {
-      this.set('_value', computed.alias('value'));
+      this.set('_value', alias('value'));
     } else {
       this.set('_value', copy(value, true));
     }

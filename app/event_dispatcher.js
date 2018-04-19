@@ -1,15 +1,17 @@
-import Ember from 'ember';
+import { merge, assign as _assign } from '@ember/polyfills';
+
+
 import EventDispatcher from 'ember-gestures/event_dispatcher';
 import config from './config/environment';
 
-const merge = Ember.assign || Ember.merge;
+const assign = _assign || merge;
 
-let gestures = merge({}, {
+let gestures = assign({}, {
     emberUseCapture: false,
     removeTracking: false,
     useFastPaths: false
   });
-gestures = merge(gestures, config.gestures);
+gestures = assign(gestures, config.gestures);
 
 export default EventDispatcher.extend({
   useCapture: gestures.emberUseCapture,

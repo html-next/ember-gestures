@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { getOwner } = Ember;
+import { getOwner } from '@ember/application';
 
 export default {
   name: 'ember-gestures',

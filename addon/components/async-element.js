@@ -1,11 +1,5 @@
-import Ember from 'ember';
+import { get, observer, computed } from '@ember/object';
 import GestureArea from './gesture-element';
-
-const {
-  computed,
-  observer,
-  get: get
-} = Ember;
 
 
 /**!
