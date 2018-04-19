@@ -84,7 +84,5 @@
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },
-  "optionalDependencies": {
-    "ember-cli-changelog": "^0.3.4"
-  }
+  "optionalDependencies": {}
 }
