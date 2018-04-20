@@ -37,15 +37,11 @@ module.exports = {
       files: ['AnimationFrame.js'],
     });
 
-    let markedTree = new Funnel(path.dirname(require.resolve('marked')), {
-      files: ['marked.js'],
-    });
-
     if (vendorTree !== undefined) {
       trees.push(vendorTree);
     }
 
-    trees.push(hammerTree, animationFrameTree, markedTree);
+    trees.push(hammerTree, animationFrameTree);
 
     return new MergeTrees(trees);
   },
