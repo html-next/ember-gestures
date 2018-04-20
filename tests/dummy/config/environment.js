@@ -43,7 +43,9 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {} // eslint-disable-line
+  if (environment === 'production') {
+    // noop block
+  }
 
 
   return ENV;
