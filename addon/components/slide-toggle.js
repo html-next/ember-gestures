@@ -60,7 +60,7 @@ export default Component.extend(RecognizerMixin, VelocityMixin, {
         target.send(action, context);
       } else {
         action = action ? 'on-toggle' : defaultAction;
-        this.sendAction(action, context);
+        this.sendAction(action, context); // eslint-disable-line
       }
 
     }

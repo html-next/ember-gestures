@@ -12,7 +12,7 @@ export default function ViewWalker(registry) {
       if (closest.hasAttribute('data-ember-action')) {
         return ['action', closest];
       }
-    } while (closest = closest.parentNode);
+    } while (closest = closest.parentNode); // eslint-disable-line
 
     return null;
   };

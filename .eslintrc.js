@@ -16,6 +16,9 @@ module.exports = {
   },
   rules: {
   },
+  globals: {
+    "Hammer": true
+  },
   overrides: [
     // node files
     {

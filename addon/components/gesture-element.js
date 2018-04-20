@@ -17,7 +17,7 @@ function makeActionHandler(event, action) {
       target.send.apply(this, args);
     } else {
       args = this._getParams(event + 'Action');
-      this.sendAction.apply(this, args);
+      this.sendAction.apply(this, args); // eslint-disable-line
     }
 
   };

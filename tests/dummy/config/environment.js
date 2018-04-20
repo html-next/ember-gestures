@@ -43,9 +43,8 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {
+  if (environment === 'production') {} // eslint-disable-line
 
-  }
 
   return ENV;
 };
