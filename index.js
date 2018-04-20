@@ -24,7 +24,6 @@ module.exports = {
 
     app.import('vendor/hammer.js');
     app.import('vendor/AnimationFrame.js');
-    app.import('vendor/marked.js');
   },
 
   treeForVendor(vendorTree) {
