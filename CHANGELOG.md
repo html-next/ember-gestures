@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-## v0.5.0
+## v1.0.0
 
 ### Pull Requests
 
