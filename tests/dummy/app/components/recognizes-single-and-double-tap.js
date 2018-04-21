@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
 import layout from '../templates/components/recognizes-single-and-double-tap';
 import RecognizerMixin from 'ember-gestures/mixins/recognizers';
-
-const {
-  Component,
-  run
-  } = Ember;
 
 export default Component.extend(RecognizerMixin, {
   layout,

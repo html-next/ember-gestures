@@ -1,11 +1,8 @@
-import Ember from 'ember';
+import { typeOf } from '@ember/utils';
+import Component from '@ember/component';
 import layout from '../templates/components/gesture-element';
 import RecognizerMixin from '../mixins/recognizers';
 import toCamel from '../utils/string/dasherized-to-camel';
-
-const {
-  Component,
-  } = Ember;
 
 
 function makeActionHandler(event, action) {
@@ -20,7 +17,7 @@ function makeActionHandler(event, action) {
       target.send.apply(this, args);
     } else {
       args = this._getParams(event + 'Action');
-      this.sendAction.apply(this, args);
+      this.sendAction.apply(this, args); // eslint-disable-line
     }
 
   };
@@ -57,7 +54,7 @@ export default Component.extend(RecognizerMixin, {
         if (v === 'toString') {
           continue;
         } // ignore useless items
-        if (Ember.typeOf(v) === 'function') {
+        if (typeOf(v) === 'function') {
           continue;
         }
 

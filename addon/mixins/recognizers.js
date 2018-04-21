@@ -1,16 +1,12 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  getOwner,
-  inject,
-  Mixin,
-  on
-  } = Ember;
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import { getOwner } from '@ember/application';
+import Mixin from '@ember/object/mixin';
+import { on } from '@ember/object/evented';
 
 export default Mixin.create({
 
-  '-gestures': inject.service('-gestures'),
+  '-gestures': service('-gestures'),
 
   __fastboot: computed(function() {
     let owner = getOwner(this);

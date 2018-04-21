@@ -1,8 +1,18 @@
+import { assert } from '@ember/debug';
+import { getOwner } from '@ember/application';
+import { merge, assign as _assign } from '@ember/polyfills';
+import { isNone } from '@ember/utils';
+import { get, set } from '@ember/object';
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from './utils/string/dasherized-to-camel';
 import jQuery from 'jquery';
 import mobileDetection from './utils/is-mobile';
+
+const {
+  EventDispatcher,
+} = Ember;
+
 
 let ROOT_ELEMENT_CLASS = 'ember-application';
 let ROOT_ELEMENT_SELECTOR = '.' + ROOT_ELEMENT_CLASS;
@@ -16,17 +26,7 @@ const eventEndings = {
   tap: []
 };
 
-const {
-  assert,
-  EventDispatcher,
-  getOwner,
-  merge,
-  isNone,
-  set,
-  get
-  } = Ember;
-
-const assign = Ember.assign || merge;
+const assign = _assign || merge;
 
 export default EventDispatcher.extend({
 
@@ -39,7 +39,7 @@ export default EventDispatcher.extend({
    */
   useFastPaths: false,
   useCapture: false,
-  
+
   _gestures: null,
   _initializeGestures() {
     const list = getModuleList();

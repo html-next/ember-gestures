@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
 import layout from '../templates/components/traditional-click';
-
-const {
-  Component,
-  run
-  } = Ember;
 
 export default Component.extend({
   layout,
