@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+## v1.1.0
+
+### Pull Requests
+
+- [#114](https://github.com/html-next/ember-gestures/pull/114)  Remove jQuery *by [Simon Ihmig](https://github.com/simonihmig)*
+
 ## v1.0.0
 
 ### Pull Requests
