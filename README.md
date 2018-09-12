@@ -12,10 +12,7 @@ to use for "fastclick" support.
 
 ## Support, Questions, Collaboration
 
-Join the [addon-ember-gestures](https://embercommunity.slack.com/messages/addon-ember-gestures/) channel on Slack.
-
-[![Slack Status](https://ember-community-slackin.herokuapp.com/badge.svg)](https://ember-community-slackin.herokuapp.com/)
-
+Join the [Ember community on Discord](https://discord.gg/zT3asNS)
 
 ### Status
 
