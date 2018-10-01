@@ -1,10 +1,11 @@
 import { getOwner } from '@ember/application';
 import { merge, assign as _assign } from '@ember/polyfills';
-import { get } from '@ember/object';
+import { get, set } from '@ember/object';
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
 import dasherizedToCamel from './utils/string/dasherized-to-camel';
 import mobileDetection from './utils/is-mobile';
+import { isNone } from '@ember/utils';
 
 const {
   EventDispatcher,
@@ -158,6 +159,10 @@ export default EventDispatcher.extend({
     // add our events to addition events
     let additionalEvents = assign({}, addedEvents);
     additionalEvents = assign(additionalEvents, this.get('_gestures'));
+
+    if (!isNone(rootElement)) {
+      set(this, 'rootElement', rootElement);
+    }
 
     this._fastFocus();
 
