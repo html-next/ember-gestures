@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+## v1.1.1
+
+### Pull Requests
+
+- [#119](https://github.com/html-next/ember-gestures/pull/119)  Fix wrong resolution of rootElement *by [Christian Davatz](https://github.com/crixx)*
+
 ## v1.1.0
 
 ### Pull Requests
