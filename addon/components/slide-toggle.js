@@ -1,6 +1,6 @@
 import { alias } from '@ember/object/computed';
 import { run } from '@ember/runloop';
-import { copy } from '@ember/object/internals';
+import { copy } from 'ember-copy';
 import Component from '@ember/component';
 import VelocityMixin from 'ember-velocity-mixin';
 import RecognizerMixin from '../mixins/recognizers';
