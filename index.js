@@ -2,48 +2,67 @@
 
 const path = require('path');
 const Funnel = require('broccoli-funnel');
-const MergeTrees = require('broccoli-merge-trees');
-const map = require('broccoli-stew').map;
+const BroccoliMergeTrees = require('broccoli-merge-trees');
+const fastbootTransform = require('fastboot-transform');
+const resolve = require('resolve');
 
 module.exports = {
 
   name: 'ember-gestures',
 
-  included(app) {
-    this._super.apply(this, arguments);
+  included() {
+    this._super.included.apply(this, arguments);
+    let app;
 
-    // see: https://github.com/ember-cli/ember-cli/issues/3718
-    while (typeof app.import !== 'function' && app.app) {
-      app = app.app;
+    // If the addon has the _findHost() method (in ember-cli >= 2.7.0), we'll just
+    // use that.
+    if (typeof this._findHost === 'function') {
+      app = this._findHost();
+    } else {
+      // Otherwise, we'll use this implementation borrowed from the _findHost()
+      // method in ember-cli.
+      let current = this;
+      do {
+        app = current.app || app;
+      } while (current.parent.parent && (current = current.parent));
     }
 
-    if (typeof app.import !== 'function') {
-      throw new Error('ember-gestures is being used within another addon or engine '
-       + 'and is having trouble registering itself to the parent application.');
-    }
-
-    app.import('vendor/hammer.js');
-    app.import('vendor/AnimationFrame.js');
+    app.import('vendor/hammerjs/hammer.js');
+    app.import('vendor/animation-frame/AnimationFrame.js');
   },
 
-  treeForVendor(vendorTree) {
+  treeForVendor(tree) {
     let trees = [];
-    let hammerTree = new Funnel(path.dirname(require.resolve('hammerjs')), {
-      files: ['hammer.js']
-    });
-    hammerTree = map(hammerTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
 
-    let animationFrameTree = new Funnel(path.dirname(require.resolve('animation-frame/AnimationFrame.js')), {
+    let hammerJs = fastbootTransform(new Funnel(this.pathBase('hammerjs'), {
+      files: ['hammer.js'],
+      destDir: 'hammerjs'
+    }));
+
+    let animationFrame = fastbootTransform(new Funnel(this.pathBase('animation-frame'), {
       files: ['AnimationFrame.js'],
-    });
+      destDir: 'animation-frame'
+    }));
 
-    if (vendorTree !== undefined) {
-      trees.push(vendorTree);
+    trees = trees.concat([hammerJs, animationFrame]);
+
+    if (tree) {
+      trees.push(tree);
     }
 
-    trees.push(hammerTree, animationFrameTree);
+    return new BroccoliMergeTrees(trees);
+  },
 
-    return new MergeTrees(trees);
+  /*
+    Rely on the `resolve` package to mimic node's resolve algorithm.
+    It finds the modules in a manner that works for npm 2.x,
+    3.x, and yarn in both the addon itself and projects that depend on this addon.
+    This is an edge case b/c some modules do not have a main
+    module we can require.resolve through node itself and similarily ember-cli
+    does not have such a hack for the same reason.
+  */
+  pathBase(packageName) {
+    return path.dirname(resolve.sync(`${packageName}/package.json`, { basedir: __dirname }));
   },
 
   isDevelopingAddon() {
