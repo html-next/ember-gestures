@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+## v1.1.2
+
+### Pull Requests
+
+- [#124](https://github.com/html-next/ember-gestures/pull/124)  fixed a couple cases where the addon didn't work in an engine *by [Conrad Lippert-Zajaczkowski](https://github.com/PrinceCornNM)*
+
+- [#121](https://github.com/html-next/ember-gestures/pull/121)  chore(deps): replace deprecated internal copy with ember-copy *by [Edward Huang](https://github.com/ilovethebends)*
+
 ## v1.1.1
 
 ### Pull Requests
