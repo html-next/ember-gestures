@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+## v1.1.3
+
+- update yarn.lock *by [html-next](https://github.com/html-next)*
+
 ## v1.1.2
 
 ### Pull Requests
