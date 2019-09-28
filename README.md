@@ -83,6 +83,16 @@ warned `pinch` `rotate` `pan` and `swipe` can break scrolling behavior if not pl
 `pan` and `swipe` are horizontal only (configured this way to avoid breaking vertical scroll).
 `vertical-pan` and `vertical-swipe` are vertical only (configured this way to avoid breaking horizontal scroll).
 
+##### Modifier
+As an alternative to using the `RecognizerMixin`, you may use the `{{recognize-gesture}}` modifier. This is particularly useful when you are applying the recognizer to an element within the handlebars of your component, rather than to the root element of a component, and vital when your component _has_ no root element, as when you use Glimmer components or components with `tagName=""`.
+
+Example
+```hbs
+<div {{recognize-gesture "pan" "tap" "press" }}>
+```
+Gestures to recognize are supplied using positional parameters on the modifier. Hammer manager options can be supplied using named parameters on the modifier.
+
+
 #### Using Gestures
 
 Using gestures emitted by Hammer recognizers with Ember is almost like using any other event with Ember.

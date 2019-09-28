@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+## v1.2.0
+
+- [#???](https://github.com/html-next/ember-gestures/pull/???) Added {recognize-gesture} modifier as alternative to mixin. Modifier requires Ember 2.18 or later to use. 
+   
 ## v1.1.3
 
 - update yarn.lock *by [html-next](https://github.com/html-next)*
