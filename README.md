@@ -92,6 +92,11 @@ Example
 ```
 Gestures to recognize are supplied using positional parameters on the modifier. Hammer manager options can be supplied using named parameters on the modifier.
 
+When using `{{ember-on-modifier}}` with these events, you must use the real DOM event names, which are lowercase without hyphens. So your event for "double-tap" would be "doubletap". 
+
+Also, if you are using objects derived from `EmberObject`, like Ember components, avoid using action names that are the camel-case form of the gesture names, like `doubleTap`, as these are also the names for the component's generated event listeners, and may get unexpectedly triggered when an event bubbles up to the component as well as when your `{{on}}` action fires on the element. (This is one more reason to migrate to Glimmer components, which don't automatically add event handlers to your namespace.) 
+
+The modifier can only be used with Ember 2.18 or later.
 
 #### Using Gestures
 

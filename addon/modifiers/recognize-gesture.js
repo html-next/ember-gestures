@@ -1,21 +1,21 @@
-import { inject as service } from '@ember/service';
+
 import Modifier from 'ember-class-based-modifier';
+import { getOwner } from '@ember/application';
 
 export default class RecognizeGestureModifier extends Modifier {
 
     constructor() {
         super(...arguments);
-        this.gestures = service('-gestures');
         this.recognizers = null;
         this.manager = null;
-    
+        this.gestures = getOwner(this).lookup('service:-gestures');
+
         if (this.args.positional) {
             this.recognizers = this.gestures.retrieve(this.args.positional);
         }
-        this.managerOptions = (this.args.named && (Object.keys(this.args.named).length > 0)) ? 
-            Object.assign({}, this.args.named) : 
-            { domEvents: true };
+        this.managerOptions = (this.args.named && (Object.keys(this.args.named).length > 0)) ? Object.assign({}, this.args.named) : { domEvents: true };
         this.managerOptions.useCapture = this.gestures.useCapture;
+
     }
 
     didInstall() {
