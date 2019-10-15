@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+## v2.0.0
+
+- [#129](https://github.com/html-next/ember-gestures/pull/129) [BREAKING] Set minimum node version to 8.x and bump to most recent qunit and ember-cli-babel 7 *by [Lupestro](https://github.com/lupestro)*
+- [#128](https://github.com/html-next/ember-gestures/pull/128) Added {recognize-gesture} modifier as alternative to mixin. Modifier requires Ember 2.18 or later to use. *by [Lupestro](https://github.com/lupestro)*
+   
 ## v1.1.3
 
 - update yarn.lock *by [html-next](https://github.com/html-next)*

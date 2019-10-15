@@ -8,6 +8,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('taps');
+  this.route('modtaps');
 });
 
 export default Router;

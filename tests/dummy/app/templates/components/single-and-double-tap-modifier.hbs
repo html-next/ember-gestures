@@ -1,0 +1,15 @@
+<div 
+    {{recognize-gesture "tap" "double-tap"}}
+    {{on "tap" (action "doTap") }}
+    {{on "doubletap" (action "doDoubleTap") }}
+>
+    <span>Tap on me once or twice (implemented with modifier).</span>
+
+    {{#if sawSingle}}
+    I saw a single-tap.
+    {{/if}}
+
+    {{#if sawDouble}}
+    I saw a double-tap.
+    {{/if}}
+</div>
