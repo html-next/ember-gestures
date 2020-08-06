@@ -153,7 +153,24 @@ Components available by default include `context-element`, `fast-action`, and `f
 The jQuery events you need to trigger are the Hammer variant, meaning it is entirely lowercase `swiperight`, `panup`.
 
 jQuery events come with baggage, and using the `trigger` helper executes handlers in a different order than they
-would otherwise execute, and in some situations will cause a handler to execute twice.  If you are experiencing
+would otherwise execute, and in some situations will cause a handler to execute twice.
+
+Example
+```js
+import { module, test } from 'qunit';
+import { triggerEvent } from '@ember/test-helpers';
+
+module('Swipe element', function(hooks) {
+
+  test('Can swipe element', async function(assert) {
+    ...
+    await triggerEvent('.swipeable-element', 'swipeleft');
+    ...
+  });
+});
+```
+
+If you are experiencing
 issues with testing gesture events, try creating your own `trigger` helper that uses native APIs instead of jQuery
 to trigger the event.
 
