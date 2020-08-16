@@ -1,6 +1,6 @@
 {
   "name": "ember-gestures",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "TouchAction and Gesture support for Ember Applications",
   "keywords": [
     "ember-addon",
@@ -81,7 +81,7 @@
     "loader.js": "^4.2.3"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": ">= 10.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
