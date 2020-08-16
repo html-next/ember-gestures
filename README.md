@@ -134,6 +134,17 @@ This will generate the file `ember-gestures/recognizers/name.js`.
 Once you've filled out the recognizer (see [./addon/recognizers/](./addon/recognizers/) for examples),
 it will be available to use in your app just like the default recognizers.
 
+##### Note
+
+Although we have provided an example for `double-tap` and `single-tap` in the `addon/recognizers` folder, they
+are for demo purposes only and do not ship with the actual addon because they are non-standard. 
+If you'd like to enable these recognizers for your own app; for instance `double-tap`; execute:
+
+`ember g recognizer double-tap`
+
+An `.app/ember-gestures/recognizers/double-tap.js` file will be created. Inspect its contents and replace
+it with the example `double-tap.js` from this addon's codebase.
+
 #### Increase the size of touchable areas to improve user experience on small controls
 
 Sometimes smaller buttons or critical buttons need a larger capture area than their visible area.
