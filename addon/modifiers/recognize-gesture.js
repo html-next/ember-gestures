@@ -1,5 +1,5 @@
 
-import Modifier from 'ember-class-based-modifier';
+import Modifier from 'ember-modifier';
 import { getOwner } from '@ember/application';
 
 export default class RecognizeGestureModifier extends Modifier {
@@ -9,25 +9,27 @@ export default class RecognizeGestureModifier extends Modifier {
         this.recognizers = null;
         this.manager = null;
         this.gestures = getOwner(this).lookup('service:-gestures');
-
-        if (this.args.positional) {
-            this.recognizers = this.gestures.retrieve(this.args.positional);
-        }
+        this.gestureNames = this.args.positional;
         this.managerOptions = (this.args.named && (Object.keys(this.args.named).length > 0)) ? Object.assign({}, this.args.named) : { domEvents: true };
         this.managerOptions.useCapture = this.gestures.useCapture;
-
     }
 
     didInstall() {
-        if (!this.recognizers) return;
-        this.element.style['touch-action'] = 'manipulation';
-        this.element.style['-ms-touch-action'] = 'manipulation'; 
-        this.recognizers.then ( (recognizers) => {
-            if (this.isDestroyed) return;
-            this.sortRecognizers(recognizers);
-            this.manager = new Hammer.Manager(this.element, this.managerOptions);
-            recognizers.forEach((recognizer) => { this.manager.add(recognizer); });        
-        });
+        if (this.args.positional) {
+            Promise.resolve().then( () => {
+                this.recognizers = this.gestures.retrieve(this.gestureNames);
+                if (this.recognizers) {
+                    this.element.style['touch-action'] = 'manipulation';
+                    this.element.style['-ms-touch-action'] = 'manipulation'; 
+                    this.recognizers.then ( (recognizers) => {
+                        if (this.isDestroyed) return;
+                        this.sortRecognizers(recognizers);
+                        this.manager = new Hammer.Manager(this.element, this.managerOptions);
+                        recognizers.forEach((recognizer) => { this.manager.add(recognizer); });        
+                    });    
+                }
+            });
+        }
     }
 
     willRemove() {
