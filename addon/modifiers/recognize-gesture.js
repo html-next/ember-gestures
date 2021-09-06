@@ -33,8 +33,10 @@ export default class RecognizeGestureModifier extends Modifier {
     }
 
     willRemove() {
-        this.manager.destroy();
-        this.manager = null;
+        if (this.manager !== null) {
+            this.manager.destroy();
+            this.manager = null;    
+        }
     }
 
     // Move each recognizer after all recognizers it excludes in the list - why?
