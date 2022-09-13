@@ -1,8 +1,8 @@
-import { merge, assign as _assign } from '@ember/polyfills';
+import { merge } from '@ember/polyfills';
 import config from '../config/environment';
 import Service from 'ember-gestures/services/-gestures';
 
-const assign = _assign || merge;
+const assign = Object.assign || merge;
 
 let gestures = assign({}, {
   useCapture: false
