@@ -1,5 +1,5 @@
 import { getOwner } from '@ember/application';
-import { merge, assign as _assign } from '@ember/polyfills';
+import { merge } from '@ember/polyfills';
 import { get, set } from '@ember/object';
 import Ember from 'ember';
 import defaultHammerEvents from './hammer-events';
@@ -21,7 +21,7 @@ const eventEndings = {
   tap: []
 };
 
-const assign = _assign || merge;
+const assign = Object.assign || merge;
 
 const notFocusableTypes = ['submit', 'file', 'button', 'hidden', 'reset', 'range', 'radio', 'image', 'checkbox'];
 
