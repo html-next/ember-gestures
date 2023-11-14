@@ -1,28 +1,33 @@
-import { computed } from '@ember/object';
-import { getOwner } from '@ember/application';
-import Service from '@ember/service';
-import RSVP from 'rsvp';
-import camelize from '../utils/string/dasherized-to-camel';
-import capitalize from '../utils/string/capitalize-word';
+import { getOwner } from "@ember/application";
+import Service from "@ember/service";
+import RSVP from "rsvp";
+import camelize from "../utils/string/dasherized-to-camel";
+import capitalize from "../utils/string/capitalize-word";
 
 const {
-  Promise,  // jshint ignore:line
-  defer // jshint ignore:line
+  Promise, // jshint ignore:line
+  defer, // jshint ignore:line
 } = RSVP;
 
-export default Service.extend({
+export default class Gestures extends Service {
+  _recognizers = {};
 
-  _recognizers: null,
-  _fastboot: computed(function() {
+  get _fastboot() {
     let owner = getOwner(this);
 
-    return owner.lookup('service:fastboot');
-  }),
+    return owner.lookup("service:fastboot");
+  }
+
+  get isFastBoot() {
+    return this._fastboot && this._fastboot.isFastBoot;
+  }
 
   retrieve(names) {
-    let promises = names.map((name) => { return this.lookupRecognizer(name); });
+    let promises = names.map((name) => {
+      return this.lookupRecognizer(name);
+    });
     return RSVP.all(promises);
-  },
+  }
 
   createRecognizer(name, details) {
     const eventName = camelize(details.eventName || name).toLowerCase();
@@ -35,51 +40,55 @@ export default Service.extend({
     const Recognizer = new Hammer[gesture](options);
     Recognizer.initialize = defer();
 
-    this.set(`_recognizers.${name}`, Recognizer);
+    this._recognizers[name] = Recognizer;
     return Recognizer;
-  },
+  }
 
   setupRecognizer(name, details) {
-    if (this.get('_fastboot.isFastBoot')) { return; }
-    return Promise.resolve(this.createRecognizer(name, details))
+    if (this.isFastBoot) {
+      return;
+    }
+    return (
+      Promise.resolve(this.createRecognizer(name, details))
 
-      // includes
-      .then((Recognizer) => {
-        if (details.include) {
-          const included = details.include.map((name) => {
-            return this.__speedyLookupRecognizer(name);
-          });
-          return RSVP.all(included).then((recognizers) => {
-            Recognizer.recognizeWith(recognizers);
-            return Recognizer;
-          });
-        }
-        return Recognizer;
-      })
+        // includes
+        .then((Recognizer) => {
+          if (details.include) {
+            const included = details.include.map((name) => {
+              return this.__speedyLookupRecognizer(name);
+            });
+            return RSVP.all(included).then((recognizers) => {
+              Recognizer.recognizeWith(recognizers);
+              return Recognizer;
+            });
+          }
+          return Recognizer;
+        })
 
-      // excludes
-      .then((Recognizer) => {
-        if (details.exclude) {
-          const excluded = details.exclude.map((name) => {
-            return this.__speedyLookupRecognizer(name);
-          });
+        // excludes
+        .then((Recognizer) => {
+          if (details.exclude) {
+            const excluded = details.exclude.map((name) => {
+              return this.__speedyLookupRecognizer(name);
+            });
 
-          return RSVP.all(excluded).then((recognizers) => {
-            Recognizer.requireFailure(recognizers);
-            Recognizer.exclude = recognizers;
+            return RSVP.all(excluded).then((recognizers) => {
+              Recognizer.requireFailure(recognizers);
+              Recognizer.exclude = recognizers;
+              Recognizer.initialize.resolve(Recognizer);
+              return Recognizer;
+            });
+          } else {
+            Recognizer.exclude = [];
             Recognizer.initialize.resolve(Recognizer);
             return Recognizer;
-          });
-        } else {
-          Recognizer.exclude = [];
-          Recognizer.initialize.resolve(Recognizer);
-          return Recognizer;
-        }
-      });
-  },
+          }
+        })
+    );
+  }
 
   __speedyLookupRecognizer(name) {
-    let recognizer = this.get(`_recognizers.${name}`);
+    let recognizer = this._recognizers[name];
     if (recognizer) {
       return recognizer;
     }
@@ -91,14 +100,17 @@ export default Service.extend({
       return this.setupRecognizer(name, details.class);
     }
 
-    return Promise.reject(new Error(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`));
-
-  },
+    return Promise.reject(
+      new Error(
+        `ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`
+      )
+    );
+  }
 
   lookupRecognizer(name) {
-    let recognizer = this.get(`_recognizers.${name}`);
+    let recognizer = this._recognizers[name];
     if (recognizer) {
-      return recognizer.initialize.promise.then(function(recognizer) {
+      return recognizer.initialize.promise.then(function (recognizer) {
         return recognizer;
       });
     }
@@ -110,12 +122,10 @@ export default Service.extend({
       return this.setupRecognizer(name, details.class);
     }
 
-    return Promise.reject(new Error(`ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`));
-  },
-
-  init() {
-    this._super();
-    this._recognizers = {};
+    return Promise.reject(
+      new Error(
+        `ember-gestures/recognizers/${name} was not found. You can scaffold this recognizer with 'ember g recognizer ${name}'`
+      )
+    );
   }
-
-});
+}
