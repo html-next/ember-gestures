@@ -1,10 +1,9 @@
-import { merge, assign as _assign } from '@ember/polyfills';
-
+import { merge } from '@ember/polyfills';
 
 import EventDispatcher from 'ember-gestures/event_dispatcher';
 import config from './config/environment';
 
-const assign = _assign || merge;
+const assign = Object.assign || merge;
 
 let gestures = assign({}, {
     emberUseCapture: false,
